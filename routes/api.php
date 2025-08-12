@@ -11,6 +11,7 @@ use App\Http\Controllers\CustomSectionController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WatchListController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 Route::post('/register', [AuthController::class, 'register']);
@@ -19,10 +20,25 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 //auth sanctum route
 Route::middleware('auth:sanctum')->group(function () {
-    //Route::get('/user', [AuthController::class, 'user']);
     Route::get('/watch-list', [WatchListController::class, 'getWatchlist']);//OK✅
     Route::post('/favorite', [WatchListController::class, 'toggleWatchlist']);//OK✅
 });
+
+Route::get('/favorites/check', function (Request $request) {
+    $request->validate([
+        'id' => 'required|integer',
+        'type' => 'required|string|in:movie,serie',
+    ]);
+
+    $user = Auth::user();
+
+    $exists = $user->favorites()
+        ->where('type', $request->type)
+        ->where('item_id', $request->id)
+        ->exists();
+
+    return response()->json(['is_favorite' => $exists]);
+})->middleware('auth:sanctum');
 
 //começa aqui
 Route::get('/home', [HomeController::class, 'index']);//OK✅

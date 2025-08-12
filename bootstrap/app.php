@@ -17,6 +17,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ]);
+        $middleware->group('web', [
+            'admin' => \App\Http\Middleware\CheckAdmin::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

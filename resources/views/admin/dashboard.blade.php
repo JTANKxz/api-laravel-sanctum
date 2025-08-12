@@ -7,7 +7,7 @@
 </head>
 <body>
     <h1>
-        Oi
+        Oi admin
     </h1>
 </body>
 </html>
