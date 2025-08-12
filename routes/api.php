@@ -11,6 +11,7 @@ use App\Http\Controllers\CustomSectionController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\WatchListController;
+use Illuminate\Support\Facades\DB;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -33,3 +34,17 @@ Route::get('/custom_section/{id}', [CustomSectionController::class, 'show']);//O
 Route::get('/genre/{id}', [GenreController::class, 'show']);//OK✅
 Route::get('/search/{query}', [SearchController::class, 'search']);//OK✅
 Route::get('/channels', [ChannelsController::class, 'index']);//OK✅
+
+Route::post('/save-token', function (Request $request) {
+    $request->validate([
+        'fcm_token' => 'required|string'
+    ]);
+
+    // Salva em uma tabela de tokens
+    DB::table('device_tokens')->updateOrInsert(
+        ['fcm_token' => $request->fcm_token],
+        ['updated_at' => now()]
+    );
+
+    return response()->json(['status' => 'Token salvo com sucesso']);
+});
