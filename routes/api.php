@@ -10,18 +10,16 @@ use App\Http\Controllers\SerieController;
 use App\Http\Controllers\CustomSectionController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\WatchListController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
-
-Route::post('/debug', function (\Illuminate\Http\Request $request) {
-    return response()->json([
-        'ok' => true,
-        'expects_json' => $request->expectsJson(),
-        'headers' => $request->headers->all(),
-    ]);
+//auth sanctum route
+Route::middleware('auth:sanctum')->group(function () {
+    //Route::get('/user', [AuthController::class, 'user']);
+    Route::get('/watch-list', [WatchListController::class, 'getWatchlist']);//OK✅
 });
 
 //começa aqui
