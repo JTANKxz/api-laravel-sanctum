@@ -4,9 +4,42 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 class WatchListController extends Controller
 {
+    public function toggleWatchlist(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => 'required|integer',
+            'type' => 'required|string|in:movie,serie',
+        ]);
+
+        $user = Auth::user();
+        $id = $validated['id'];
+        $type = $validated['type'];
+
+        $wasAdded = false;
+
+        if ($type === 'movie') {
+            $syncResult = $user->watchlistMovies()->toggle([$id]);
+            $wasAdded = !empty($syncResult['attached']);
+        } else {
+            $syncResult = $user->watchlistSeries()->toggle([$id]);
+            $wasAdded = !empty($syncResult['attached']);
+        }
+
+        $message = $wasAdded ? 'Adicionado à sua lista!' : 'Removido da sua lista!';
+
+        // Sempre retorna JSON, independente do tipo de requisição
+        return response()->json([
+            'message' => $message,
+            'added' => $wasAdded,
+        ]);
+    }
+
+
     public function getWatchlist()
     {
         $user = Auth::user();
@@ -20,7 +53,7 @@ class WatchListController extends Controller
             'movies' => $user->watchlistMovies,
             'series' => $user->watchlistSeries,
         ];
-        
+
         return response()->json($watchlist);
     }
 }
