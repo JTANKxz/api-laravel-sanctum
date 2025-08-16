@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -17,9 +18,20 @@ class CustomHomeSectionItem extends Model
         return $this->belongsTo(CustomHomeSection::class, 'section_id');
     }
 
-    public function content()
+    // Substitui o morphTo por um accessor seguro
+    public function getContentAttribute()
     {
-        return $this->morphTo(null, 'content_type', 'content_id');
+        $classMap = [
+            'movie' => \App\Models\Movie::class,
+            'serie' => \App\Models\Serie::class,
+        ];
+
+        $class = $classMap[$this->content_type] ?? null;
+
+        if ($class && class_exists($class)) {
+            return $class::find($this->content_id);
+        }
+
+        return null;
     }
 }
-

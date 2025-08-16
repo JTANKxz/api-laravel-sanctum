@@ -1,20 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+//uses public
+use App\Http\Controllers\Public\HomeController;
 use App\Http\Controllers\Public\AuthController as PublicAuthController;
-use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+
+//uses admin
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EpisodePlayLinkController;
+use App\Http\Controllers\Admin\MoviePlayLinkController;
+use App\Http\Controllers\Admin\HomeSectionController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\MovieController as AdminMovieController;
+use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\SerieController as AdminSerieController;
+use App\Http\Controllers\Admin\TmdbController as AdminTmdbController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
-// Rotas públicas
-Route::get('/login', [PublicAuthController::class, 'login'])->name('public.login');
-Route::post('/login', [PublicAuthController::class, 'loginProcess'])->name('public.login.process');
-
-Route::get('/register', [PublicAuthController::class, 'register'])->name('public.register');
-Route::post('/register', [PublicAuthController::class, 'registerProcess'])->name('public.register.process');
-
-Route::post('/logout', [PublicAuthController::class, 'logout'])->name('public.logout');
-
+Route::get('/', [HomeController::class, 'index']);
 
 // Rotas admin
 Route::prefix('admin')->group(function () {
@@ -23,8 +27,91 @@ Route::prefix('admin')->group(function () {
     Route::post('/logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
 });
 
-Route::middleware(['admin'])->group(function () {
-    Route::prefix('dash')->name('admin.')->group(function () {
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(function () {
+    // Dashboard principal
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::delete('/{slider}', [DashboardController::class, 'deleteSlider'])->name('deleteSlider');
+
+    Route::prefix('tmdb')->name('tmdb.')->group(function () {
+        Route::get('/', [AdminTmdbController::class, 'index'])->name('index');  // /dashboard/tmdb
+        Route::get('/search', [AdminTmdbController::class, 'search'])->name('search'); // /dashboard/tmdb/search
+        Route::post('/import', [AdminTmdbController::class, 'import'])->name('import'); // rota AJAX POST
+        Route::get('/import-serie', [AdminTmdbController::class, 'importSerie'])->name('importSerie');
+        Route::get('/get-seasons', [AdminTmdbController::class, 'getSeasons'])->name('getSeasons');
+        Route::get('/import-seasons', [AdminTmdbController::class, 'importSeasons'])->name('importSeasons');
+        Route::get('/import-episodes', [AdminTmdbController::class, 'importEpisodes'])->name('importEpisodes');
+        Route::get('/import-episodes-all', [AdminTmdbController::class, 'importAllEpisodes'])->name('importEpisodesAll');
+    });
+
+    // Grupo de rotas de usuários
+    Route::prefix('users')->name('users.')->group(function () {
+        Route::get('/', [AdminUserController::class, 'index'])->name('index');           // /dashboard/users
+        Route::get('/{id}', [AdminUserController::class, 'show'])->name('show');         // /dashboard/users/{id}
+        Route::get('/{id}/edit', [AdminUserController::class, 'edit'])->name('edit');    // /dashboard/users/{id}/edit
+        Route::put('/{id}', [AdminUserController::class, 'update'])->name('update');     // /dashboard/users/{id} (PUT)
+        Route::delete('/{id}', [AdminUserController::class, 'destroy'])->name('delete'); // /dashboard/users/{id} (DELETE)
+    });
+
+    // Grupo de rotas de filmes
+    Route::prefix('movies')->name('movies.')->group(function () {
+        Route::get('/', [AdminMovieController::class, 'index'])->name('index');           // /dashboard/movies
+        Route::get('/{id}', [AdminMovieController::class, 'show'])->name('show');         // /dashboard/movies/{id}
+        Route::get('/{id}/edit', [AdminMovieController::class, 'edit'])->name('edit');    // /dashboard/movies/{id}/edit
+        Route::put('/{id}', [AdminMovieController::class, 'update'])->name('update');     // /dashboard/movies/{id} (PUT)
+        Route::delete('/{id}', [AdminMovieController::class, 'destroy'])->name('delete'); // /dashboard/movies/{id} (DELETE)
+        Route::get('/{movie}/links', [AdminMovieController::class, 'linkManager'])->name('links'); // /dashboard/movies/{id}/links
+    });
+
+    Route::prefix('links')->name('links.')->group(function () {
+        Route::get('/{movie}/create', [MoviePlayLinkController::class, 'create'])->name('create'); // /dashboard/links/{movie}/create
+        Route::post('/{movie}', [MoviePlayLinkController::class, 'store'])->name('store'); // /dashboard/links/{movie}
+        Route::get('/{link}/edit', [MoviePlayLinkController::class, 'edit'])->name('edit'); // /dashboard/links/{movie}/edit
+        Route::put('/{link}', [MoviePlayLinkController::class, 'update'])->name('update'); // /dashboard/links/{movie}
+        Route::delete('/{link}', [MoviePlayLinkController::class, 'destroy'])->name('destroy'); // /dashboard/links/{movie}
+    });
+
+    // Grupo de rotas de séries
+    Route::prefix('series')->name('series.')->group(function () {
+        Route::get('/', [AdminSerieController::class, 'index'])->name('index');           // /dashboard/series
+        Route::get('/{id}', [AdminSerieController::class, 'show'])->name('show');         // /dashboard/series/{id}
+        Route::get('/{id}/edit', [AdminSerieController::class, 'edit'])->name('edit');    // /dashboard/series/{id}/edit
+        Route::put('/{id}', [AdminSerieController::class, 'update'])->name('update');     // /dashboard/series/{id} (PUT)
+        Route::delete('/{id}', [AdminSerieController::class, 'destroy'])->name('delete'); // /dashboard/series/{id} (DELETE)
+
+        Route::get('/{serie}/seasons', [AdminSerieController::class, 'manageSeasons'])->name('seasons');
+        Route::get('/{serie}/seasons/{season}/episodes', [AdminSerieController::class, 'manageEpisodes'])->name('episodes');
+        Route::delete('/{serie}/seasons/{season}', [AdminSerieController::class, 'deleteSeason'])->name('deleteSeason');
+        Route::delete('/{serie}/seasons/{season}/episodes/{episode}', [AdminSerieController::class, 'deleteEpisode'])->name('deleteEpisode');
+    });
+
+    Route::prefix('episodes')->name('episodes.')->group(function () {
+        Route::get('/{episode}/links', [EpisodePlayLinkController::class, 'index'])->name('links'); // /dashboard/episodes/{id}/links
+        Route::get('/{episode}/links/create', [EpisodePlayLinkController::class, 'create'])->name('createLink'); // /dashboard/episodes/{id}/links/create
+        Route::post('/{episode}/links/create', [EpisodePlayLinkController::class, 'store'])->name('storeLink'); // /dashboard/episodes/{id}/links/create
+        Route::get('/links/{link}/edit', [EpisodePlayLinkController::class, 'edit'])->name('editLink'); // /dashboard/episodes/{id}/links/{link}/edit')
+        Route::put('/links/{link}', [EpisodePlayLinkController::class, 'update'])->name('updateLink'); // /dashboard/episodes/{id}/links/{link}/edit')
+        Route::delete('/links/{link}', [EpisodePlayLinkController::class, 'destroy'])->name('destroyLink'); // /dashboard/episodes/{id}/links/{link}/edit')
+    });
+
+    Route::prefix('sliders')->name('sliders.')->group(function () {
+        Route::get('/', [SliderController::class, 'index'])->name('index');
+        Route::get('/create', [SliderController::class, 'create'])->name('create');
+        Route::post('/create', [SliderController::class, 'store'])->name('store');
+        Route::get('/search', [SliderController::class, 'search'])->name('search');
+        Route::delete('/{slider}', [SliderController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('sections')->name('sections.')->group(function () {
+        Route::get('/', [HomeSectionController::class, 'index'])->name('index');
+        Route::get('/create', [HomeSectionController::class, 'create'])->name('create');
+        Route::post('/create', [HomeSectionController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [HomeSectionController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [HomeSectionController::class, 'update'])->name('update');
+        Route::delete('/{section}', [HomeSectionController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('notifications')->name('notifications.')->group(function () {
+        Route::get('/', [NotificationController::class, 'index'])->name('index');
+        Route::post('/send', [NotificationController::class, 'send'])->name('send');
     });
 });

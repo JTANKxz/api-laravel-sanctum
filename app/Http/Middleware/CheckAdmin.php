@@ -16,7 +16,7 @@ class CheckAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'Please log in first');
+            return redirect()->route('admin.login')->with('error', 'Please log in first');
         }
 
         if (!auth()->user()->is_admin) {

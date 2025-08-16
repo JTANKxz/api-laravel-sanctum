@@ -6,8 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>
-        Oi
-    </h1>
+    <h1>OI</h1>
 </body>
 </html>

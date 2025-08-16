@@ -16,7 +16,7 @@ class Serie extends Model
         'poster_url',
         'backdrop_url',
         'rating',
-        'content_type', // Adicionado aqui
+        'content_type',
     ];
 
     public function genres()

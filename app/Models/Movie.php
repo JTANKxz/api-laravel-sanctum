@@ -8,7 +8,7 @@ class Movie extends Model
 {
     protected $fillable = [
         'tmdb_id',
-        'imdb_id', // Adicionado aqui
+        'imdb_id',
         'title',
         'slug',
         'year',
@@ -17,7 +17,7 @@ class Movie extends Model
         'backdrop_url',
         'runtime',
         'rating',
-        'content_type', // Adicionado aqui
+        'content_type',
     ];
 
     public function genres()
