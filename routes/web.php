@@ -93,6 +93,11 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::delete('/links/{link}', [EpisodePlayLinkController::class, 'destroy'])->name('destroyLink'); // /dashboard/episodes/{id}/links/{link}/edit')
     });
 
+    Route::prefix('links')->name('links.')->group(function () {
+        Route::get('/series/{serie}/bulk-links', [EpisodePlayLinkController::class, 'bulkLinks'])->name('bulkLinks');
+        Route::post('/series/{serie}/bulk-links', [EpisodePlayLinkController::class, 'bulkStore'])->name('bulkStore');
+    });
+
     Route::prefix('sliders')->name('sliders.')->group(function () {
         Route::get('/', [SliderController::class, 'index'])->name('index');
         Route::get('/create', [SliderController::class, 'create'])->name('create');

@@ -48,6 +48,10 @@
 
                         {{-- Ações --}}
                         <td class="py-3 px-4 flex items-center space-x-2">
+                            <a href="{{ route('admin.links.bulkLinks', $serie->id) }}" class="text-purple-400 hover:text-purple-300">
+                                <i class="fas fa-link"></i>
+                            </a>
+
                             <a href="{{ route('admin.series.seasons', $serie->id) }}" class="text-blue-400 hover:text-blue-300">
                                 <i class="fas fa-list"></i>
                             </a>

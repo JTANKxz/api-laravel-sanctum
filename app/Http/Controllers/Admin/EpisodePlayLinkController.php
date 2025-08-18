@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Episode;
+use App\Models\Serie;
+use App\Models\Season;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EpisodePlayLink;
@@ -59,6 +61,42 @@ class EpisodePlayLinkController extends Controller
         return redirect()->route('admin.episodes.links', ['episode' => $link->episode->id])
             ->with('success', 'Link atualizado com sucesso!');
     }
+
+    public function bulkLinks(Serie $serie)
+    {
+        // pega a primeira temporada, ou todas
+        $season = $serie->seasons()->first();
+
+        $episodes = $season->episodes()->with('playLinks')->get();
+        return view('admin.links.episodes', compact('serie', 'season', 'episodes'));
+    }
+
+
+    public function bulkStore(Request $request, Serie $serie)
+    {
+        $data = $request->all();
+
+        foreach ($data['episodes'] as $epId => $links) {
+            foreach ($links as $link) {
+                if (!empty($link['id'])) {
+                    $playLink = \App\Models\EpisodePlayLink::find($link['id']);
+                    if ($playLink) {
+                        $playLink->update($link);
+                    }
+                } else {
+                    if (!empty($link['url'])) {
+                        $link['episode_id'] = $epId;
+                        \App\Models\EpisodePlayLink::create($link);
+                    }
+                }
+            }
+        }
+
+        return redirect()->route('admin.links.bulkLinks', [$serie->id])
+            ->with('success', 'Links salvos com sucesso!');
+    }
+
+
 
     public function destroy(EpisodePlayLink $link)
     {

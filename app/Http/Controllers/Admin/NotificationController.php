@@ -11,7 +11,7 @@ class NotificationController extends Controller
     public function index()
     {
         // Exemplo: retorna view para enviar notificações
-        return view('admin.notifications.index');
+        return view('admin.push.index');
     }
 
     public function send(Request $request)
