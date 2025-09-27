@@ -308,6 +308,7 @@
             padding: 0;
             margin: 0;
             list-style: none;
+            overflow: hidden;
         }
 
         .episode-item {
@@ -840,8 +841,10 @@
             }
 
             .episode-item {
-                flex-direction: column;
-                align-items: flex-start;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+
             }
 
             .episode-info {
@@ -849,7 +852,7 @@
             }
 
             .episode-duration {
-                text-align: left;
+                text-align: right;
                 margin-bottom: 10px;
             }
 
