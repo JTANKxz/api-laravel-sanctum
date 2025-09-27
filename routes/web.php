@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 //uses public
 use App\Http\Controllers\Public\HomeController;
+use App\Http\Controllers\Public\MovieController;
+use App\Http\Controllers\Public\SerieController;
+use App\Http\Controllers\Public\SearchController;
+use App\Http\Controllers\Public\GenreController;
 use App\Http\Controllers\Public\AuthController as PublicAuthController;
 
 //uses admin
@@ -18,7 +22,14 @@ use App\Http\Controllers\Admin\SerieController as AdminSerieController;
 use App\Http\Controllers\Admin\TmdbController as AdminTmdbController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/filme/{id}', [MovieController::class, 'showByTmdb'])->name('movie.by.tmdb');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/filmes/{slug}', [MovieController::class, 'show'])->name('movie.show');
+Route::get('/series/{slug}', [SerieController::class, 'show'])->name('serie.show');
+Route::get('/filmes', [MovieController::class, 'index'])->name('movie.index');
+Route::get('/series', [SerieController::class, 'index'])->name('serie.index');
+Route::get('/pesquisa', [SearchController::class, 'index'])->name('search.index');
+Route::get('/categorias/{slug}', [GenreController::class, 'show'])->name('genres.show');
 
 // Rotas admin
 Route::prefix('admin')->group(function () {
