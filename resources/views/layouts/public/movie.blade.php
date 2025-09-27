@@ -8,57 +8,63 @@
             margin-bottom: 40px;
         }
 
-        .movie-backdrop {
-            position: relative;
-            width: 100%;
-            min-height: 300px;
-            /* mostrar a imagem inteira */
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            /* remova o aspect-ratio fixo */
-            aspect-ratio: 16/9;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: flex-end;
-        }
+        /* Backdrop do filme */
+      /* Backdrop do filme */
+.movie-backdrop {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    display: inline-block;
+}
 
-        .movie-backdrop::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
-        }
+/* Imagem responsiva */
+.movie-backdrop img {
+    width: 100%;
+    height: auto; /* mantém proporção */
+    display: block;
+    border-radius: 10px;
+}
 
-        .backdrop-play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(160, 82, 224, 0.8);
-            color: white;
-            border: none;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            transition: all 0.3s;
-        }
+/* Gradiente sobre a imagem */
+.movie-backdrop::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    pointer-events: none; /* permite clicar no botão */
+}
 
-        .backdrop-play-btn:hover {
-            background-color: var(--primary-color);
-            transform: translate(-50%, -50%) scale(1.1);
-        }
+/* Botão de play */
+.backdrop-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(160, 82, 224, 0.8);
+    color: white;
+    border: none;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    transition: all 0.3s;
+}
+
+.backdrop-play-btn:hover {
+    background-color: var(--primary-color);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
 
         .movie-content {
             position: relative;
@@ -362,21 +368,30 @@
         }
 
         /* Video Player */
+
         .video-player-container {
-            aspect-ratio: 16/9;
-            min-height: 300px;
+            position: relative;
+            width: 100%;
+            max-width: 100%;
             background-color: #000;
             border-radius: 10px;
             overflow: hidden;
             margin-bottom: 5px;
-            position: relative;
+            /* Aspect ratio 16:9 usando padding-bottom */
+            padding-top: 56.25%;
+            /* 9 / 16 * 100 */
             display: none;
+            overflow: hidden;
         }
 
         .video-player {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
         }
+
 
         .video-js {
             width: 100%;
@@ -545,12 +560,6 @@
         /* Tablets (768px pra baixo) */
         @media (max-width: 768px) {
 
-            .movie-backdrop,
-            .video-player-container {
-                height: 35vh;
-                min-height: 250px;
-            }
-
             .movie-title {
                 font-size: 28px;
             }
@@ -701,7 +710,6 @@
 @endsection
 
 @section('content')
-
 @endsection
 
 @section('scripts')

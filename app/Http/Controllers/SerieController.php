@@ -37,7 +37,7 @@ class SerieController extends Controller
 
         // AutoEmbeds para série
         $autoEmbeds = AutoEmbedUrls::where('active', true)
-            ->whereIn('content_type', ['serie', 'both']) 
+            ->whereIn('content_type', ['serie', 'both'])
             ->orderBy('order')
             ->get();
 

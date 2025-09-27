@@ -23,6 +23,8 @@ use App\Http\Controllers\Admin\TmdbController as AdminTmdbController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 Route::get('/filme/{id}', [MovieController::class, 'showByTmdb'])->name('movie.by.tmdb');
+Route::get('/serie/{tmdbId}', [SerieController::class, 'showByTmdb'])->name('serie.by.tmdb');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/filmes/{slug}', [MovieController::class, 'show'])->name('movie.show');
 Route::get('/series/{slug}', [SerieController::class, 'show'])->name('serie.show');

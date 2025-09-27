@@ -7,34 +7,39 @@
             margin-bottom: 40px;
         }
 
+        /* Backdrop da série */
         .serie-backdrop {
             position: relative;
             width: 100%;
-            min-height: 300px;
-            /* mostrar a imagem inteira */
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            /* remova o aspect-ratio fixo */
-            aspect-ratio: 16/9;
             border-radius: 10px;
             overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: flex-end;
+            margin-bottom: 20px;
+            display: inline-block;
         }
 
+        /* Imagem responsiva */
+        .serie-backdrop img {
+            width: 100%;
+            height: auto;
+            /* mantém proporção */
+            display: block;
+            border-radius: 10px;
+        }
 
+        /* Gradiente sobre a imagem */
         .serie-backdrop::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, transparent 100%);
+            height: 50%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+            pointer-events: none;
+            /* permite clicar no botão */
         }
 
+        /* Botão de play (mesmo estilo do filme) */
         .backdrop-play-btn {
             position: absolute;
             top: 50%;
@@ -59,6 +64,7 @@
             background-color: var(--primary-color);
             transform: translate(-50%, -50%) scale(1.1);
         }
+
 
         .serie-content {
             position: relative;
@@ -301,7 +307,8 @@
         }
 
         .season-content.active {
-            max-height: 1000px;
+            max-height: fit-content;
+            /* ou 'none' se precisar */
         }
 
         .episodes-list {
@@ -509,19 +516,24 @@
             margin-top: 5px;
         }
 
-        /* Video Player */
+        /* Video player da série */
         .video-player-container {
-            aspect-ratio: 16/9;
-            min-height: 300px;
+            position: relative;
+            width: 100%;
+            max-width: 100%;
             background-color: #000;
             border-radius: 10px;
             overflow: hidden;
             margin-bottom: 5px;
-            position: relative;
+            padding-top: 56.25%;
+            /* 16:9 */
             display: none;
         }
 
         .video-player {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
         }
@@ -908,24 +920,23 @@
 @endsection
 
 @section('modal')
- <!-- Modal de Seleção de Player -->
- <div class="player-modal" id="playerModal">
-    <div class="player-modal-content">
-        <div class="player-modal-header">
-            <h2 class="player-modal-title">Selecione uma Opção de Reprodução</h2>
-        </div>
-        <div class="player-modal-body" id="playerOptions">
-            <!-- As opções serão geradas dinamicamente pelo JavaScript -->
-        </div>
-        <div class="player-modal-footer">
-            <button class="player-modal-close" id="playerModalClose">Fechar</button>
+    <!-- Modal de Seleção de Player -->
+    <div class="player-modal" id="playerModal">
+        <div class="player-modal-content">
+            <div class="player-modal-header">
+                <h2 class="player-modal-title">Selecione uma Opção de Reprodução</h2>
+            </div>
+            <div class="player-modal-body" id="playerOptions">
+                <!-- As opções serão geradas dinamicamente pelo JavaScript -->
+            </div>
+            <div class="player-modal-footer">
+                <button class="player-modal-close" id="playerModalClose">Fechar</button>
+            </div>
         </div>
     </div>
-</div>
 @endsection
 
 @section('content')
-   
 @endsection
 
 @section('scripts')

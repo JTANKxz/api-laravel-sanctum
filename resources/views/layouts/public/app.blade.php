@@ -76,18 +76,22 @@
             margin-left: 20px;
         }
 
-        .header-item a,
-        .menu-icon {
-            text-decoration: none;
+        .menu-icon,
+        .header-item a {
+            font-size: 24px;
+            /* aumenta o tamanho do ícone */
+            padding: 10px;
+            /* aumenta a área clicável */
             color: var(--text-color);
-            font-size: 18px;
             cursor: pointer;
-            transition: color 0.3s ease-in-out;
+            transition: color 0.3s ease-in-out, transform 0.2s;
         }
 
-        .header-item a:hover,
-        .menu-icon:hover {
+        .menu-icon:hover,
+        .header-item a:hover {
             color: var(--hover-color);
+            transform: scale(1.1);
+            /* leve zoom ao passar o mouse */
         }
 
         /* Menu e Searchbar flutuantes */
@@ -359,7 +363,7 @@
 
             .header-item a,
             .menu-icon {
-                font-size: 16px;
+                font-size: 18px;
             }
 
             .menu-bar,
@@ -396,7 +400,7 @@
 
             .header-item a,
             .menu-icon {
-                font-size: 14px;
+                font-size: 18px;
             }
 
             .menu-bar,
@@ -490,7 +494,7 @@
 
     <div id="searchBar" class="search-bar">
         <form action="{{ route('search.index') }}" method="GET">
-            <input type="text" id="searchInput" class="search-bar-input" placeholder="Pesquise por filmes..." />
+            <input type="text" name="q" id="searchInput" class="search-bar-input" placeholder="Pesquise..." />
         </form>
     </div>
 
@@ -515,7 +519,7 @@
         <!-- Footer (comum a todas as páginas) -->
         <footer class="footer">
             <div class="footer-content">
-                
+
                 {{-- <div class="footer-column">
                     <h3>Categorias</h3>
                     <ul class="footer-links">

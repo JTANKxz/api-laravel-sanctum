@@ -6,7 +6,8 @@
     <!-- Seção de Detalhes do Filme -->
     <section class="movie-detail-section">
         <!-- Backdrop do Filme -->
-        <div class="movie-backdrop" id="movieBackdrop" style="background-image: url('{{ $movie->backdrop_url }}');">
+        <div class="movie-backdrop" id="movieBackdrop">
+            <img src="{{ $movie->backdrop_url }}" alt="Backdrop de {{ $movie->title }}">
             <button class="backdrop-play-btn" id="backdropPlayBtn">
                 <i class="fas fa-play"></i>
             </button>

@@ -6,7 +6,8 @@
     <!-- Seção de Detalhes da Série -->
     <section class="serie-detail-section">
         <!-- Backdrop da Série -->
-        <div class="serie-backdrop" id="serieBackdrop" style="background-image: url('{{ $serie->backdrop_url }}');">
+        <div class="serie-backdrop" id="serieBackdrop">
+            <img src="{{ $serie->backdrop_url }}" alt="Backdrop de {{ $serie->title }}">
             <button class="backdrop-play-btn" id="backdropPlayBtn">
                 <i class="fas fa-play"></i>
             </button>
@@ -95,7 +96,6 @@
     <section class="seasons-section">
         <div class="section-header">
             <h2 class="section-title">Temporadas</h2>
-            <a href="#" class="see-all-btn">Ver todas <i class="fa-solid fa-arrow-right"></i></a>
         </div>
 
         @foreach ($seasons as $season)
@@ -155,7 +155,6 @@
     <section class="similar-series-section">
         <div class="section-header">
             <h2 class="section-title">Séries Similares</h2>
-            <a href="#" class="see-all-btn">Ver tudo <i class="fa-solid fa-arrow-right"></i></a>
         </div>
         <div class="series-container">
             @foreach ($relatedSeries as $similar)
