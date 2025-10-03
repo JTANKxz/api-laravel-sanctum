@@ -10,10 +10,15 @@ use App\Models\EpisodePlayLink;
 
 class SerieController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $page = $request->query('page', 1);
+        $pageSize = $request->query('pageSize', 20);
+
         $series = Serie::with('genres')
             ->orderByDesc('id')
+            ->skip(($page - 1) * $pageSize)
+            ->take($pageSize)
             ->get();
 
         return response()->json($series);
