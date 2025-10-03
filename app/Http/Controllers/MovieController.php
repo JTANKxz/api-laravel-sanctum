@@ -10,14 +10,20 @@ use Illuminate\Http\Request;
 
 class MovieController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $page = $request->query('page', 1);
+        $pageSize = $request->query('pageSize', 20);
+
         $movies = Movie::with('genres')
             ->orderByDesc('id')
+            ->skip(($page - 1) * $pageSize)
+            ->take($pageSize)
             ->get();
 
         return response()->json($movies);
     }
+
 
     public function show($id)
     {
