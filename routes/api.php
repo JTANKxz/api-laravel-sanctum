@@ -15,12 +15,12 @@ use App\Http\Controllers\WatchListController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout']);
 
 //auth sanctum route
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/watch-list', [WatchListController::class, 'getWatchlist']);//OK✅
     Route::post('/favorite', [WatchListController::class, 'toggleWatchlist']);//OK✅
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 //começa aqui
