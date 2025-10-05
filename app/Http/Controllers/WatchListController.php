@@ -63,11 +63,9 @@ class WatchListController extends Controller
         $id = $request->query('id');
         $type = $request->query('type'); // "movie" ou "serie"
 
-        $contentType = $type === 'movie' ? \App\Models\Movie::class : \App\Models\Serie::class;
-
         $exists = $user->watchlist()
             ->where('content_id', $id)
-            ->where('content_type', $contentType)
+            ->where('content_type', $type === 'movie' ? \App\Models\Movie::class : \App\Models\Serie::class)
             ->exists();
 
         return response()->json(['exists' => $exists]);
