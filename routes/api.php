@@ -20,6 +20,7 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/watch-list', [WatchListController::class, 'getWatchlist']);//OK✅
     Route::post('/favorite', [WatchListController::class, 'toggleWatchlist']);//OK✅
+    Route::get('/watch-list/check', [WatchListController::class, 'checkWatchlist']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
