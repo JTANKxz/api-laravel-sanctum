@@ -3,14 +3,28 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Genre;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Movie;
+use App\Models\Network;
 use App\Models\Serie;
 use App\Models\Slider;
 
 class DashboardController extends Controller
 {
+
+    public function listGenres()
+    {
+        $genres = Genre::select('id', 'name')->orderBy('name')->get();
+        return response()->json($genres);
+    }
+
+    public function listNetworks()
+    {
+        $networks = Network::select('id', 'name')->orderBy('name')->get();
+        return response()->json($networks);
+    }
 
     public function index()
     {

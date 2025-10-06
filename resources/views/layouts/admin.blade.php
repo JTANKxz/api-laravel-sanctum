@@ -193,10 +193,16 @@
                         </button>
                         <ul class="submenu bg-light-gray ml-4 rounded-md">
                             <li><a href="{{ route('admin.sections.index') }}"
-                                    class="block px-8 py-2 text-gray-300 hover:bg-dark-gray hover:text-white">Seções</a>
+                                    class="block px-8 py-2 text-gray-300 hover:bg-dark-gray hover:text-white">Custom Home</a>
                             </li>
                             <li><a href="{{ route('admin.sliders.index') }}"
                                     class="block px-8 py-2 text-gray-300 hover:bg-dark-gray hover:text-white">Sliders</a>
+                            </li>
+                            <li><a href="{{ route('admin.networks.index') }}"
+                                    class="block px-8 py-2 text-gray-300 hover:bg-dark-gray hover:text-white">Networks</a>
+                            </li>
+                            <li><a href="{{ route('admin.explore.index') }}"
+                                    class="block px-8 py-2 text-gray-300 hover:bg-dark-gray hover:text-white">App Explore Section</a>
                             </li>
                         </ul>
                     </div>

@@ -46,6 +46,12 @@ class Serie extends Model
         return $this->morphToMany(User::class, 'content', 'watchlist')->withTimestamps();
     }
 
+    public function networks()
+    {
+        return $this->morphToMany(Network::class, 'networkable');
+    }
+
+
     protected static function boot()
     {
         parent::boot();

@@ -15,9 +15,11 @@ use App\Http\Controllers\Admin\EpisodePlayLinkController;
 use App\Http\Controllers\Admin\MoviePlayLinkController;
 use App\Http\Controllers\Admin\HomeSectionController;
 use App\Http\Controllers\Admin\SliderController;
-use App\Http\Controllers\Admin\AuthController as AdminAuthController;
-use App\Http\Controllers\Admin\MovieController as AdminMovieController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\ExploreController;
+use App\Http\Controllers\Admin\MovieController as AdminMovieController;
+use App\Http\Controllers\Admin\NetworkController as AdminNetworkController;
 use App\Http\Controllers\Admin\SerieController as AdminSerieController;
 use App\Http\Controllers\Admin\TmdbController as AdminTmdbController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
@@ -44,6 +46,8 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
     // Dashboard principal
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::delete('/{slider}', [DashboardController::class, 'deleteSlider'])->name('deleteSlider');
+    Route::get('/genres/list', [DashboardController::class, 'listGenres'])->name('genres.list');
+    Route::get('/networks/list', [DashboardController::class, 'listNetworks'])->name('networks.list');
 
     Route::prefix('tmdb')->name('tmdb.')->group(function () {
         Route::get('/', [AdminTmdbController::class, 'index'])->name('index');  // /dashboard/tmdb
@@ -126,6 +130,24 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::get('/{id}/edit', [HomeSectionController::class, 'edit'])->name('edit');
         Route::put('/{id}', [HomeSectionController::class, 'update'])->name('update');
         Route::delete('/{section}', [HomeSectionController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('networks')->name('networks.')->group(function () {
+        Route::get('/', [AdminNetworkController::class, 'index'])->name('index');
+        Route::get('/create', [AdminNetworkController::class, 'create'])->name('create');
+        Route::post('/create', [AdminNetworkController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [AdminNetworkController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [AdminNetworkController::class, 'update'])->name('update');
+        Route::delete('/{network}', [AdminNetworkController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('explore')->name('explore.')->group(function () {
+        Route::get('/', [ExploreController::class, 'index'])->name('index');
+        Route::get('/create', [ExploreController::class, 'create'])->name('create');
+        Route::post('/create', [ExploreController::class, 'store'])->name('store');
+        Route::get('/{section}/edit', [ExploreController::class, 'edit'])->name('edit');
+        Route::put('/{section}', [ExploreController::class, 'update'])->name('update');
+        Route::delete('/{section}', [ExploreController::class, 'destroy'])->name('delete');
     });
 
     Route::prefix('notifications')->name('notifications.')->group(function () {

@@ -8,7 +8,9 @@ use App\Http\Controllers\ChannelsController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\CustomSectionController;
+use App\Http\Controllers\ExploreSectionController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\NetworkController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserDeviceController;
 use App\Http\Controllers\WatchListController;
@@ -32,6 +34,13 @@ Route::get('/movie/{id}', [MovieController::class, 'show']);//OK✅
 Route::get('/serie/{id}', [SerieController::class, 'show']);//OK✅
 Route::get('/custom_section/{id}', [CustomSectionController::class, 'show']);//OK✅
 Route::get('/genre/{id}', [GenreController::class, 'show']);//OK✅
+Route::get('/genres', [GenreController::class, 'index']);//OK✅
 Route::get('/search/{query}', [SearchController::class, 'search']);//OK✅
 Route::get('/channels', [ChannelsController::class, 'index']);//OK✅
 Route::post('/devices', [UserDeviceController::class, 'store']);
+
+Route::get('/networks', [NetworkController::class, 'index']);//OK✅
+Route::get('/networks/{id}', [NetworkController::class, 'showContents']);//OK✅
+
+
+Route::get('/explore', [ExploreSectionController::class, 'index']);//OK✅
