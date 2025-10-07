@@ -37,10 +37,10 @@ Route::get('/genre/{id}', [GenreController::class, 'show']);//OK✅
 Route::get('/genres', [GenreController::class, 'index']);//OK✅
 Route::get('/search/{query}', [SearchController::class, 'search']);//OK✅
 Route::get('/channels', [ChannelsController::class, 'index']);//OK✅
-Route::post('/devices', [UserDeviceController::class, 'store']);
 
 Route::get('/networks', [NetworkController::class, 'index']);//OK✅
 Route::get('/networks/{id}', [NetworkController::class, 'showContents']);//OK✅
-
-
 Route::get('/explore', [ExploreSectionController::class, 'index']);//OK✅
+    
+//firebase
+Route::post('/user/device', [UserDeviceController::class, 'store']);

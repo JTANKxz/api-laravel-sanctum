@@ -82,7 +82,7 @@
 
         {{-- Botões --}}
         <div class="mt-6 flex justify-end space-x-3">
-            <a href="{{ route('admin.sections.index') }}" class="btn bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded">
+            <a href="{{ route('admin.explore.index') }}" class="btn bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded">
                 Voltar
             </a>
 

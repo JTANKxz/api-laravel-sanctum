@@ -33,8 +33,6 @@ class ExploreController extends Controller
             'is_active' => 'boolean'
         ]);
         
-        
-
         SectionExplore::create($validated);
 
         return redirect()->route('admin.explore.index')->with('success', 'Seção criada com sucesso!');

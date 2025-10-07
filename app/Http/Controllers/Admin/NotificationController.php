@@ -4,58 +4,56 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class NotificationController extends Controller
 {
-    public function index()
+    public function create()
     {
-        // Exemplo: retorna view para enviar notificações
         return view('admin.push.index');
     }
 
     public function send(Request $request)
     {
         $request->validate([
-            'title'   => 'required|string|max:255',
-            'body'    => 'required|string|max:500',
-            'token'   => 'nullable|string', // se enviar para 1 device
-            'topic'   => 'nullable|string', // se enviar para um tópico
+            'title' => 'required|string|max:255',
+            'body'  => 'required|string|max:1000',
+            'image' => 'nullable|url',
         ]);
 
-        $serverKey = env('FIREBASE_SERVER_KEY'); // guarda no .env
-        $url = 'https://fcm.googleapis.com/fcm/send';
+        // Busca todos os tokens cadastrados
+        $tokens = DB::table('user_devices')->pluck('fcm_token')->toArray();
 
-        // Monta payload
-        $data = [
-            "notification" => [
-                "title" => $request->title,
-                "body"  => $request->body,
-                "sound" => "default"
+        if (empty($tokens)) {
+            return back()->with('error', 'Nenhum dispositivo registrado.');
+        }
+
+        $fcmServerKey = env('FCM_SERVER_KEY'); // Adicione no seu .env
+
+        $payload = [
+            'registration_ids' => $tokens,
+            'notification' => [
+                'title' => $request->title,
+                'body' => $request->body,
+                'image' => $request->image,
             ],
-            "priority" => "high",
+            'data' => [
+                'title' => $request->title,
+                'body' => $request->body,
+                'imageUrl' => $request->image,
+            ],
         ];
 
-        // Se enviou para token específico
-        if ($request->token) {
-            $data["to"] = $request->token;
-        }
-
-        // Se enviou para tópico (ex: "filmes")
-        if ($request->topic) {
-            $data["to"] = "/topics/" . $request->topic;
-        }
-
-        // Envia para o Firebase
         $response = Http::withHeaders([
-            'Authorization' => 'key=' . $serverKey,
-            'Content-Type'  => 'application/json',
-        ])->post($url, $data);
+            'Authorization' => 'key=' . $fcmServerKey,
+            'Content-Type' => 'application/json',
+        ])->post('https://fcm.googleapis.com/fcm/send', $payload);
 
         if ($response->successful()) {
             return back()->with('success', 'Notificação enviada com sucesso!');
         }
 
-        return back()->with('error', 'Erro ao enviar notificação: ' . $response->body());
+        return back()->with('error', 'Falha ao enviar notificação.');
     }
 }

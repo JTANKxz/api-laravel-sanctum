@@ -15,7 +15,6 @@ use App\Http\Controllers\Admin\EpisodePlayLinkController;
 use App\Http\Controllers\Admin\MoviePlayLinkController;
 use App\Http\Controllers\Admin\HomeSectionController;
 use App\Http\Controllers\Admin\SliderController;
-use App\Http\Controllers\Admin\NotificationController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\ExploreController;
 use App\Http\Controllers\Admin\MovieController as AdminMovieController;
@@ -23,6 +22,7 @@ use App\Http\Controllers\Admin\NetworkController as AdminNetworkController;
 use App\Http\Controllers\Admin\SerieController as AdminSerieController;
 use App\Http\Controllers\Admin\TmdbController as AdminTmdbController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 
 Route::get('/filme/{id}', [MovieController::class, 'showByTmdb'])->name('movie.by.tmdb');
 Route::get('/serie/{tmdbId}', [SerieController::class, 'showByTmdb'])->name('serie.by.tmdb');
@@ -151,7 +151,7 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
     });
 
     Route::prefix('notifications')->name('notifications.')->group(function () {
-        Route::get('/', [NotificationController::class, 'index'])->name('index');
-        Route::post('/send', [NotificationController::class, 'send'])->name('send');
+        Route::get('/create', [AdminNotificationController::class, 'create'])->name('create');
+        Route::post('/send', [AdminNotificationController::class, 'send'])->name('send');
     });
 });
