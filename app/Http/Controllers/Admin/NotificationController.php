@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Google\Auth\Credentials\ServiceAccountCredentials;
+
 
 class NotificationController extends Controller
 {
@@ -18,42 +20,46 @@ class NotificationController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'body'  => 'required|string|max:1000',
+            'body'  => 'required|string',
             'image' => 'nullable|url',
         ]);
 
-        // Busca todos os tokens cadastrados
-        $tokens = DB::table('user_devices')->pluck('fcm_token')->toArray();
+        // ⚠️ Corrige aqui também: use FIREBASE_PROJECT_ID, não FCM_SERVER_KEY
+        $projectId = env('FIREBASE_PROJECT_ID');
+        $url = "https://fcm.googleapis.com/v1/projects/{$projectId}/messages:send";
 
-        if (empty($tokens)) {
-            return back()->with('error', 'Nenhum dispositivo registrado.');
-        }
+        // Caminho do arquivo JSON da conta de serviço
+        $keyFile = storage_path('app/private/auth.json');
 
-        $fcmServerKey = env('FCM_SERVER_KEY'); // Adicione no seu .env
+        // Cria credenciais e obtém token OAuth2
+        $scopes = ['https://www.googleapis.com/auth/firebase.messaging'];
+        $credentials = new ServiceAccountCredentials($scopes, $keyFile);
+        $accessToken = $credentials->fetchAuthToken()['access_token'];
 
+        // Monta o payload
         $payload = [
-            'registration_ids' => $tokens,
-            'notification' => [
-                'title' => $request->title,
-                'body' => $request->body,
-                'image' => $request->image,
-            ],
-            'data' => [
-                'title' => $request->title,
-                'body' => $request->body,
-                'imageUrl' => $request->image,
+            'message' => [
+                'topic' => 'all',
+                'notification' => [            // ✅ adiciona esta seção
+                    'title' => $request->title,
+                    'body'  => $request->body,
+                ],
+                'data' => [
+                    'title'   => $request->title,
+                    'message' => $request->body,
+                    'image'   => $request->image,
+                ],
             ],
         ];
+        
 
-        $response = Http::withHeaders([
-            'Authorization' => 'key=' . $fcmServerKey,
-            'Content-Type' => 'application/json',
-        ])->post('https://fcm.googleapis.com/fcm/send', $payload);
+        // Envia ao FCM
+        $response = Http::withToken($accessToken)->post($url, $payload);
 
         if ($response->successful()) {
-            return back()->with('success', 'Notificação enviada com sucesso!');
+            return redirect()->back()->with('success', '✅ Notificação enviada com sucesso!');
         }
 
-        return back()->with('error', 'Falha ao enviar notificação.');
+        return redirect()->back()->with('error', '❌ Erro ao enviar: ' . $response->body());
     }
 }

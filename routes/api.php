@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppConfigController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -44,3 +45,5 @@ Route::get('/explore', [ExploreSectionController::class, 'index']);//OK✅
     
 //firebase
 Route::post('/user/device', [UserDeviceController::class, 'store']);
+
+Route::get('/app-config', [AppConfigController::class, 'getCustomMessage']);
