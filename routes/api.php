@@ -46,4 +46,5 @@ Route::get('/explore', [ExploreSectionController::class, 'index']);//OK✅
 //firebase
 Route::post('/user/device', [UserDeviceController::class, 'store']);
 
-Route::get('/app-config', [AppConfigController::class, 'getCustomMessage']);
+Route::get('/appMessgae', [AppConfigController::class, 'getCustomMessage']);
+Route::get('/appUpdate', [AppConfigController::class, 'getAppUptade']);
