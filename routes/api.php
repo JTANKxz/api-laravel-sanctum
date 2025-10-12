@@ -12,6 +12,7 @@ use App\Http\Controllers\CustomSectionController;
 use App\Http\Controllers\ExploreSectionController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\NetworkController;
+use App\Http\Controllers\RequestOrderController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserDeviceController;
 use App\Http\Controllers\WatchListController;
@@ -23,7 +24,11 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/watch-list', [WatchListController::class, 'getWatchlist']);//OK✅
     Route::post('/favorite', [WatchListController::class, 'toggleWatchlist']);//OK✅
-    Route::get('/watch-list/check', [WatchListController::class, 'checkWatchlist']);
+    Route::get('/watch-list/check', [WatchListController::class, 'checkWatchlist']);//OK✅
+    Route::get('/orders', [RequestOrderController::class, 'index']); // Lista pedidos do usuário
+    Route::get('/orders/search', [RequestOrderController::class, 'search']); // Pesquisa em tempo real
+
+    Route::get('/orders/send', [RequestOrderController::class, 'store']); // 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 

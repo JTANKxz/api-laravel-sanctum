@@ -59,6 +59,7 @@
                 <select name="type"
                     class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-netflix-red">
                     <option value="embed">Embed</option>
+                    <option value="custom">Custom(streamwish,dood, etc...)</option>
                     <option value="m3u8">M3U8</option>
                     <option value="mp4" selected>MP4</option>
                     <option value="mkv">MKV</option>

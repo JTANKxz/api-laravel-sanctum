@@ -27,6 +27,7 @@ class AppConfigController extends Controller
             'update_url' => $config->update_url,
             'update_type' => $config->update_type,
             'min_version' => $config->min_version,
+            'app_version' => $config->app_version
         ]);
     }
 }

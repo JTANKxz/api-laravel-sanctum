@@ -49,7 +49,7 @@
                     class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-netflix-red">
             </div>
             <div>
-                <label class="block text-gray-400 mb-2">Type</label>
+                <label class="block text-gray-400 mb-2">Player Sub</label>
                 <select name="player_sub"
                     class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-netflix-red">
                     <option value="free" @selected($link->player_sub === 'free')>Free</option>
@@ -62,7 +62,7 @@
                 <label class="block text-gray-400 mb-2">Type</label>
                 <select name="type"
                     class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-netflix-red">
-                    @foreach (['mp4', 'mkv', 'm3u8', 'embed'] as $option)
+                    @foreach (['mp4', 'mkv', 'm3u8', 'embed', 'custom'] as $option)
                         <option value="{{ $option }}" @selected($link->type === $option)>{{ strtoupper($option) }}</option>
                     @endforeach
                 </select>
