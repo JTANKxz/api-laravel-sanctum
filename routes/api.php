@@ -22,13 +22,10 @@ Route::post('/login', [AuthController::class, 'login']);
 
 //auth sanctum route
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/me', [AuthController::class, 'me']);
     Route::get('/watch-list', [WatchListController::class, 'getWatchlist']);//OK✅
     Route::post('/favorite', [WatchListController::class, 'toggleWatchlist']);//OK✅
     Route::get('/watch-list/check', [WatchListController::class, 'checkWatchlist']);//OK✅
-    Route::get('/orders', [RequestOrderController::class, 'index']); // Lista pedidos do usuário
-    Route::get('/orders/search', [RequestOrderController::class, 'search']); // Pesquisa em tempo real
-
-    Route::get('/orders/send', [RequestOrderController::class, 'store']); // 
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 

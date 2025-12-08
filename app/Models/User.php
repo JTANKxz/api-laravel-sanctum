@@ -11,42 +11,29 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    // Use a trait HasApiTokens junto com as outras
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
     /**
-     * Get the orders for the user.
+     * ===========================
+     * Relações
+     * ===========================
      */
+
     public function orders()
     {
         return $this->hasMany(Order::class);
@@ -62,6 +49,11 @@ class User extends Authenticatable
         return $this->morphedByMany(Serie::class, 'content', 'watchlist')->withTimestamps();
     }
 
+    public function subscription()
+    {
+        return $this->hasOne(UserSubscription::class);
+    }
+
     /**
      * Lista unificada de todos os conteúdos salvos
      */
@@ -71,5 +63,93 @@ class User extends Authenticatable
             ->merge($this->watchlistMovies)
             ->merge($this->watchlistSeries)
             ->sortByDesc('pivot.created_at');
+    }
+
+    /**
+     * ===========================
+     * Lógica de Assinatura
+     * ===========================
+     */
+
+    /**
+     * Retorna true se o usuário tiver uma assinatura ativa
+     */
+    public function hasActiveSubscription(): bool
+    {
+        $subscription = $this->subscription;
+
+        return $subscription
+            && !$subscription->isExpired()
+            && $subscription->status === 'active';
+    }
+
+    /**
+     * Retorna o plano atual do usuário (ou null)
+     */
+    public function currentPlan()
+    {
+        return $this->subscription?->plan;
+    }
+
+    /**
+     * Verifica se o usuário possui um benefício específico
+     */
+    public function hasBenefit($key): bool
+    {
+        $subscription = $this->subscription;
+
+        if (!$subscription || $subscription->isExpired()) {
+            return false;
+        }
+
+        $plan = $subscription->plan;
+
+        if (!$plan || empty($plan->benefits)) {
+            return false;
+        }
+
+        return in_array($key, $plan->benefits);
+    }
+
+    /**
+     * Verifica se o usuário é premium
+     */
+    public function isPremium(): bool
+    {
+        $subscription = $this->subscription;
+
+        if (!$subscription || $subscription->isExpired()) {
+            return false;
+        }
+
+        $plan = $subscription->plan;
+
+        // Se o plano tiver slug "premium" ou contiver benefício premium
+        return $plan && (
+            ($plan->slug ?? null) === 'premium' ||
+            $this->hasBenefit('premium')
+        );
+    }
+
+    /**
+     * Retorna um array resumido para o app (usado no /api/me)
+     */
+    public function toProfileArray(): array
+    {
+        $subscription = $this->subscription;
+        $plan = $subscription?->plan;
+
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'email' => $this->email,
+            'is_premium' => $this->isPremium(),
+            'subscription' => [
+                'plan' => $plan?->name,
+                'slug' => $plan?->slug,
+                'expires_at' => $subscription?->expires_at,
+                'status' => $subscription?->status,
+            ],
+        ];
     }
 }

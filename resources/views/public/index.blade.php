@@ -1,5 +1,7 @@
 @extends('layouts.public.home')
 
+@section('title', 'Início - ' . config('app.name'))
+
 @section('content')
 
     <section class="slides-section">
