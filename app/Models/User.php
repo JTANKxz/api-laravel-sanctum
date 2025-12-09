@@ -143,7 +143,6 @@ class User extends Authenticatable
             'is_premium' => $this->isPremium(),
             'subscription' => [
                 'plan' => $plan?->name,
-                'slug' => $plan?->slug,
                 'expires_at' => $subscription?->expires_at,
                 'status' => $subscription?->status,
             ],

@@ -45,7 +45,7 @@
                     class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-netflix-red">
             </div>
             <div>
-                <label class="block text-gray-400 mb-2">Type</label>
+                <label class="block text-gray-400 mb-2">PLayer Sub</label>
                 <select name="player_sub"
                     class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-netflix-red">
                     <option value="free">Free</option>

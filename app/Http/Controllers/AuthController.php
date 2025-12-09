@@ -31,7 +31,7 @@ class AuthController extends Controller
             'plan_id'    => null,              // valor fixo para representar "Free"
             'started_at' => now(),
             'expires_at' => null,
-            'status'     => 'none',
+            'status'     => 'expired',
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -68,7 +68,7 @@ class AuthController extends Controller
         if (!$user->subscription) {
             $user->subscription()->create([
                 'plan_id' => null,     // plano free
-                'status' => 'none',
+                'status' => 'expired',
                 'started_at' => now(),
                 'expires_at' => null,  // sem expiração
             ]);
