@@ -88,8 +88,13 @@ class AuthController extends Controller
      */
     public function me(Request $request)
     {
+        $user = $request->user();
+
+        // Atualiza a assinatura automaticamente se estiver expirada
+        $user->checkSubscriptionExpiration();
+
         return response()->json([
-            'user' => $this->formatUser($request->user())
+            'user' => $user->toProfileArray()
         ]);
     }
 

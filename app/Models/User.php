@@ -83,6 +83,26 @@ class User extends Authenticatable
             && $subscription->status === 'active';
     }
 
+    public function checkSubscriptionExpiration(): void
+    {
+        $subscription = $this->subscription;
+
+        if (!$subscription) {
+            return;
+        }
+
+        // Se tem expires_at e já passou, e ainda não está 'expired'
+        if (
+            $subscription->expires_at
+            && now()->isAfter($subscription->expires_at)
+            && $subscription->status !== 'expired'
+        ) {
+            $subscription->update([
+                'status' => 'expired'
+            ]);
+        }
+    }
+
     /**
      * Retorna o plano atual do usuário (ou null)
      */

@@ -12,6 +12,7 @@ use App\Http\Controllers\CustomSectionController;
 use App\Http\Controllers\ExploreSectionController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\NetworkController;
+use App\Http\Controllers\PlansController;
 use App\Http\Controllers\PremiumCodeController;
 use App\Http\Controllers\RequestOrderController;
 use App\Http\Controllers\SearchController;
@@ -46,6 +47,9 @@ Route::get('/channels', [ChannelsController::class, 'index']);//OK✅
 Route::get('/networks', [NetworkController::class, 'index']);//OK✅
 Route::get('/networks/{id}', [NetworkController::class, 'showContents']);//OK✅
 Route::get('/explore', [ExploreSectionController::class, 'index']);//OK✅
+Route::get('/plans', [PlansController::class, 'index']);//OK✅
+
+
     
 //firebase
 Route::post('/user/device', [UserDeviceController::class, 'store']);
