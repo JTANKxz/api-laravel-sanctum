@@ -118,18 +118,15 @@ class User extends Authenticatable
     {
         $subscription = $this->subscription;
 
-        if (!$subscription || $subscription->isExpired()) {
+        // Se não tem assinatura → não é premium
+        if (!$subscription) {
             return false;
         }
 
-        $plan = $subscription->plan;
-
-        // Se o plano tiver slug "premium" ou contiver benefício premium
-        return $plan && (
-            ($plan->slug ?? null) === 'premium' ||
-            $this->hasBenefit('premium')
-        );
+        // Considera premium apenas se status é 'active'
+        return $subscription->status === 'active';
     }
+
 
     /**
      * Retorna um array resumido para o app (usado no /api/me)

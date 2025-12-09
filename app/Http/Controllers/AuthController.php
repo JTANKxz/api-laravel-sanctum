@@ -28,10 +28,10 @@ class AuthController extends Controller
 
         // Criar assinatura gratuita SEM precisar existir plano
         $user->subscription()->create([
-            'plan_id'    => 0,              // valor fixo para representar "Free"
+            'plan_id'    => null,              // valor fixo para representar "Free"
             'started_at' => now(),
             'expires_at' => null,
-            'status'     => 'active',
+            'status'     => 'none',
         ]);
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -68,7 +68,7 @@ class AuthController extends Controller
         if (!$user->subscription) {
             $user->subscription()->create([
                 'plan_id' => null,     // plano free
-                'status' => 'active',
+                'status' => 'none',
                 'started_at' => now(),
                 'expires_at' => null,  // sem expiração
             ]);
