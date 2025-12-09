@@ -14,11 +14,13 @@ class PremiumCode extends Model
         'max_uses',
         'used_count',
         'status',
+        'expires_at',
     ];
 
     protected $casts = [
-        'max_uses' => 'integer',
+        'max_uses'   => 'integer',
         'used_count' => 'integer',
+        'expires_at' => 'datetime', // ✅ Corrige o erro
     ];
 
     public function plan()
