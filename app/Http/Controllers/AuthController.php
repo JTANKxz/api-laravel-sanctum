@@ -59,6 +59,21 @@ class AuthController extends Controller
         }
 
         $user = User::where('email', $validated['email'])->first();
+
+        /**
+         * ----------------------------------------
+         * CRIA ASSINATURA FREE SE NÃO EXISTIR
+         * ----------------------------------------
+         */
+        if (!$user->subscription) {
+            $user->subscription()->create([
+                'plan_id' => null,     // plano free
+                'status' => 'active',
+                'started_at' => now(),
+                'expires_at' => null,  // sem expiração
+            ]);
+        }
+
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -106,10 +121,9 @@ class AuthController extends Controller
             'email' => $user->email,
             'is_premium' => $user->isPremium(),
             'subscription' => $subscription ? [
-                'plan' => $subscription->plan_id == 0
+                'plan' => $subscription->plan_id === null
                     ? 'Free'
                     : ($subscription->plan->name ?? null),
-
                 'expires_at' => $subscription->expires_at,
                 'status' => $subscription->status,
             ] : null,
