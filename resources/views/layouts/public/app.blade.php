@@ -563,7 +563,7 @@
 
                     <div class="footer-apps">
 
-                        <a href="#" class="app-download">
+                        <a href="https://maxcine.online/app.apk" class="app-download">
                             <i class="fas fa-download"></i>
                             <div class="app-info">
                                 <span>Download</span>
