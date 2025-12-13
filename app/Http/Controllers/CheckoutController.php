@@ -20,11 +20,16 @@ class CheckoutController extends Controller
 
         $plan = Plan::findOrFail($request->plan_id);
 
-        // Cria referência interna segura
+        if (!$plan->cakto_offer_id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Plano não configurado para pagamento'
+            ], 400);
+        }
+
         $internalRef = Str::uuid()->toString();
 
-        // Cria pagamento pendente
-        $payment = Payment::create([
+        Payment::create([
             'user_id' => $user->id,
             'plan_id' => $plan->id,
             'internal_ref' => $internalRef,
@@ -32,8 +37,8 @@ class CheckoutController extends Controller
             'status' => 'pending',
         ]);
 
-        // URL da Cakto com refId
-        $checkoutUrl = "https://pay.cakto.com.br/kz4bukp_686238/{$plan->id}?refId={$internalRef}";
+        // ✅ URL CORRETA
+        $checkoutUrl = "https://pay.cakto.com.br/{$plan->cakto_offer_id}?refId={$internalRef}";
 
         return response()->json([
             'success' => true,

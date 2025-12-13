@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/redeem', [PremiumCodeController::class, 'redeem']); // ✅ NOVO
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::post('/chekout/create', [CheckoutController::class, 'create']);
+    Route::post('/banana', [CheckoutController::class, 'create']);
 });
 Route::get('/plans', [PlansController::class, 'index']);//OK✅
 
