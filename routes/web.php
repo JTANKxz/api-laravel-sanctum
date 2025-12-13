@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\SerieController as AdminSerieController;
 use App\Http\Controllers\Admin\TmdbController as AdminTmdbController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
+use App\Http\Controllers\Admin\PremiumCodeControllerr;
 use App\Http\Controllers\Admin\SubscriptionController;
 
 Route::get('/filme/{id}', [MovieController::class, 'showByTmdb'])->name('movie.by.tmdb');
@@ -68,6 +69,8 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::get('/{id}/edit', [AdminUserController::class, 'edit'])->name('edit');    // /dashboard/users/{id}/edit
         Route::put('/{id}', [AdminUserController::class, 'update'])->name('update');     // /dashboard/users/{id} (PUT)
         Route::delete('/{id}', [AdminUserController::class, 'destroy'])->name('delete'); // /dashboard/users/{id} (DELETE)
+        Route::get('/ajax', [AdminUserController::class, 'ajax'])->name('ajax');
+
     });
 
     // Grupo de rotas de filmes
@@ -158,5 +161,19 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
 
     Route::prefix('subscriptions')->name('subscriptions.')->group(function () {
         Route::get('/', [SubscriptionController::class, 'index'])->name('index');
+        Route::get('/create', [SubscriptionController::class, 'create'])->name('create');
+        Route::post('/create', [SubscriptionController::class, 'store'])->name('store');
+        Route::get('/{plan}/edit', [SubscriptionController::class, 'edit'])->name('edit');
+        Route::put('/{plan}', [SubscriptionController::class, 'update'])->name('update');
+        Route::delete('/{plan}', [SubscriptionController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('coupans')->name('coupans.')->group(function () {
+        Route::get('/', [PremiumCodeControllerr::class, 'index'])->name('index');
+        Route::get('/create', [PremiumCodeControllerr::class, 'create'])->name('create');
+        Route::post('/create', [PremiumCodeControllerr::class, 'store'])->name('store');
+        Route::get('/{coupan}/edit', [PremiumCodeControllerr::class, 'edit'])->name('edit');
+        Route::put('/{coupan}', [PremiumCodeControllerr::class, 'update'])->name('update');
+        Route::delete('/{coupan}', [PremiumCodeControllerr::class, 'destroy'])->name('delete');
     });
 });

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChannelsController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\CustomSectionController;
@@ -30,7 +31,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/watch-list/check', [WatchListController::class, 'checkWatchlist']);//OK✅
     Route::post('/redeem', [PremiumCodeController::class, 'redeem']); // ✅ NOVO
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::post('/chekout/create', [CheckoutController::class, 'create']);
 });
+Route::get('/plans', [PlansController::class, 'index']);//OK✅
 
 //começa aqui
 Route::get('/home', [HomeController::class, 'index']);//OK✅
@@ -47,7 +51,6 @@ Route::get('/channels', [ChannelsController::class, 'index']);//OK✅
 Route::get('/networks', [NetworkController::class, 'index']);//OK✅
 Route::get('/networks/{id}', [NetworkController::class, 'showContents']);//OK✅
 Route::get('/explore', [ExploreSectionController::class, 'index']);//OK✅
-Route::get('/plans', [PlansController::class, 'index']);//OK✅
 
 
     

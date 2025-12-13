@@ -51,8 +51,10 @@ class User extends Authenticatable
 
     public function subscription()
     {
-        return $this->hasOne(UserSubscription::class);
+        return $this->hasOne(UserSubscription::class)
+            ->where('status', 'active');
     }
+
 
     /**
      * Lista unificada de todos os conteúdos salvos
@@ -71,6 +73,10 @@ class User extends Authenticatable
      * ===========================
      */
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
     /**
      * Retorna true se o usuário tiver uma assinatura ativa
      */
@@ -138,14 +144,17 @@ class User extends Authenticatable
     {
         $subscription = $this->subscription;
 
-        // Se não tem assinatura → não é premium
         if (!$subscription) {
             return false;
         }
 
-        // Considera premium apenas se status é 'active'
+        if ($subscription->expires_at && now()->isAfter($subscription->expires_at)) {
+            return false;
+        }
+
         return $subscription->status === 'active';
     }
+
 
 
     /**

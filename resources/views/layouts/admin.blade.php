@@ -206,12 +206,16 @@
                             </li>
                         </ul>
                     </div>
+                    <a href="{{ route('admin.notifications.create') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
+                        <i class="fas fa-bell text-netflix-red w-6"></i>
+                        <span class="sidebar-label ml-4">Notificações</span>
+                    </a>
                     <a href="{{ route('admin.users.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
                         <i class="fas fa-users text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">Usuários</span>
                     </a>
                     <a href="{{ route('admin.subscriptions.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
-                        <i class="fas fa-credit text-netflix-red w-6"></i>
+                        <i class="fas fa-credit-card text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">Assinaturas</span>
                     </a>
                     <a href="{{ route('admin.tmdb.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">

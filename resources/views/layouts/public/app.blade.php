@@ -488,7 +488,7 @@
             <a href="{{ route('home') }}">Início</a>
             <a href="{{ route('movie.index') }}">Filmes</a>
             <a href="{{ route('serie.index') }}">Séries</a>
-            <a href="#">Baixe Nosso App (Em Breve)</a>
+            <a href="https://maxcine.online/app.apk">Baixe Nosso App</a>
         </nav>
     </div>
 
