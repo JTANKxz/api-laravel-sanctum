@@ -156,7 +156,6 @@ class User extends Authenticatable
     }
 
 
-
     /**
      * Retorna um array resumido para o app (usado no /api/me)
      */
@@ -172,7 +171,9 @@ class User extends Authenticatable
             'is_premium' => $this->isPremium(),
             'subscription' => [
                 'plan' => $plan?->name,
-                'expires_at' => $subscription?->expires_at,
+                'expires_at' => $subscription?->expires_at
+                    ? $subscription->expires_at->format('d/m/Y H:i')
+                    : null,
                 'status' => $subscription?->status,
             ],
         ];

@@ -75,10 +75,16 @@ class PremiumCodeController extends Controller
         }
 
         // Aplicar assinatura premium
+        // Base de cálculo: hoje às 00:00
+        $baseDate = now()->startOfDay();
+
+        // Soma a duração do plano
+        $expiresAt = $baseDate->addDays($plan->duration_days);
+
         $subscription->update([
             'plan_id'    => $plan->id,
-            'started_at' => now(),
-            'expires_at' => now()->addDays($plan->duration_days),
+            'started_at' => now(),      // continua sendo o horário real
+            'expires_at' => $expiresAt, // sempre 00:00
             'status'     => 'active',
         ]);
 
