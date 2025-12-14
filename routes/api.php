@@ -17,6 +17,7 @@ use App\Http\Controllers\PlansController;
 use App\Http\Controllers\PremiumCodeController;
 use App\Http\Controllers\RequestOrderController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\UserApiController;
 use App\Http\Controllers\UserDeviceController;
 use App\Http\Controllers\WatchListController;
 
@@ -31,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/watch-list/check', [WatchListController::class, 'checkWatchlist']);//OK✅
     Route::post('/redeem', [PremiumCodeController::class, 'redeem']); // ✅ NOVO
     Route::post('/logout', [AuthController::class, 'logout']);
-
+    Route::put('/user', [UserApiController::class, 'update']);
     Route::post('/banana', [CheckoutController::class, 'create']);
 });
 Route::get('/plans', [PlansController::class, 'index']);//OK✅
