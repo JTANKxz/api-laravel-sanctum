@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\SupportApiController;
 use App\Http\Controllers\AppConfigController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::put('/user', [UserApiController::class, 'update']);
     Route::post('/banana', [CheckoutController::class, 'create']);
+    Route::post('/support', [SupportApiController::class, 'store']);
 });
 Route::get('/plans', [PlansController::class, 'index']);//OK✅
 
