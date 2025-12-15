@@ -30,12 +30,14 @@ Route::get('/filme/{id}', [MovieController::class, 'showByTmdb'])->name('movie.b
 Route::get('/serie/{tmdbId}', [SerieController::class, 'showByTmdb'])->name('serie.by.tmdb');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/app/download', [HomeController::class, 'appDownload'])->name('app.download');
 Route::get('/filmes/{slug}', [MovieController::class, 'show'])->name('movie.show');
 Route::get('/series/{slug}', [SerieController::class, 'show'])->name('serie.show');
 Route::get('/filmes', [MovieController::class, 'index'])->name('movie.index');
 Route::get('/series', [SerieController::class, 'index'])->name('serie.index');
 Route::get('/pesquisa', [SearchController::class, 'index'])->name('search.index');
 Route::get('/categorias/{slug}', [GenreController::class, 'show'])->name('genres.show');
+
 
 // Rotas admin
 Route::prefix('admin')->group(function () {

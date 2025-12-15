@@ -18,7 +18,7 @@ class SupportApiController extends Controller
         $data = $request->validate([
             'category' => ['required', 'in:movie,series,tv,app'],
             'problem' => ['required', 'string', 'max:255'],
-
+            
             // 🔥 ITEM (SÓ QUANDO NÃO FOR APP)
             'item_name' => ['nullable', 'string', 'max:255'],
             'item_type' => ['nullable', 'in:movie,series,tv'],

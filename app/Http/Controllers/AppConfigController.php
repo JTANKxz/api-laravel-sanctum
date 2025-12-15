@@ -30,4 +30,12 @@ class AppConfigController extends Controller
             'app_version' => $config->app_version
         ]);
     }
+
+    public function getAppName()
+    {
+        $config = AppConfig::first(); // ou pega por ID se tiver mais de uma
+        return response()->json([
+            'app_name' => $config->app_name
+        ]);
+    }
 }

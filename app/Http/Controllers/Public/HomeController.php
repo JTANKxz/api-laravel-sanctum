@@ -27,4 +27,9 @@ class HomeController
 
         return view('public/index', compact('sliders', 'genres', 'movies', 'series', 'sections', 'genreSections'));
     }
+
+    public function appDownload()
+    {
+        return view('public/app-download');
+    }
 }

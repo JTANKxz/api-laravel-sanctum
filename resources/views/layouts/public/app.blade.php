@@ -507,7 +507,7 @@
             <nav class="header-nav">
                 <ul class="header-menu">
                     <li class="header-item">
-                        <a href="#" id="searchIcon"><i class="fa-solid fa-magnifying-glass"></i></a>
+                        <a href="{{ route('home') }}" id="searchIcon"><i class="fa-solid fa-magnifying-glass"></i></a>
                     </li>
                 </ul>
             </nav>
