@@ -25,6 +25,8 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 use App\Http\Controllers\Admin\PremiumCodeControllerr;
 use App\Http\Controllers\Admin\SubscriptionController;
+use App\Http\Controllers\Admin\TvChannelController;
+use App\Http\Controllers\Admin\TvChannelLinkController;
 
 Route::get('/filme/{id}', [MovieController::class, 'showByTmdb'])->name('movie.by.tmdb');
 Route::get('/serie/{tmdbId}', [SerieController::class, 'showByTmdb'])->name('serie.by.tmdb');
@@ -72,7 +74,6 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::put('/{id}', [AdminUserController::class, 'update'])->name('update');     // /dashboard/users/{id} (PUT)
         Route::delete('/{id}', [AdminUserController::class, 'destroy'])->name('delete'); // /dashboard/users/{id} (DELETE)
         Route::get('/ajax', [AdminUserController::class, 'ajax'])->name('ajax');
-
     });
 
     // Grupo de rotas de filmes
@@ -91,6 +92,26 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::get('/{link}/edit', [MoviePlayLinkController::class, 'edit'])->name('edit'); // /dashboard/links/{movie}/edit
         Route::put('/{link}', [MoviePlayLinkController::class, 'update'])->name('update'); // /dashboard/links/{movie}
         Route::delete('/{link}', [MoviePlayLinkController::class, 'destroy'])->name('destroy'); // /dashboard/links/{movie}
+    });
+
+    // Grupo de rotas de canais de TV
+    Route::prefix('tv')->name('tv.')->group(function () {
+        Route::get('/', [TvChannelController::class, 'index'])->name('index');             // /dashboard/tv
+        Route::get('/create', [TvChannelController::class, 'create'])->name('create');     // /dashboard/tv/create
+        Route::post('/', [TvChannelController::class, 'store'])->name('store');            // /dashboard/tv (POST)
+        Route::get('/{channel}', [TvChannelController::class, 'edit'])->name('edit');      // /dashboard/tv/{channel}
+        Route::put('/{channel}', [TvChannelController::class, 'update'])->name('update');  // /dashboard/tv/{channel} (PUT)
+        Route::delete('/{channel}', [TvChannelController::class, 'destroy'])->name('delete'); // /dashboard/tv/{channel} (DELETE)
+        Route::get('/{channel}/links', [TvChannelController::class, 'edit'])->name('links'); // Gerenciar links do canal
+    });
+
+    // Grupo de rotas de links de TV
+    Route::prefix('tv-links')->name('tv-links.')->group(function () {
+        Route::get('/{channel}/create', [TvChannelLinkController::class, 'create'])->name('create'); // /dashboard/tv-links/{channel}/create
+        Route::post('/{channel}', [TvChannelLinkController::class, 'store'])->name('store');         // /dashboard/tv-links/{channel}
+        Route::get('/{link}/edit', [TvChannelLinkController::class, 'edit'])->name('edit');         // /dashboard/tv-links/{link}/edit
+        Route::put('/{link}', [TvChannelLinkController::class, 'update'])->name('update');          // /dashboard/tv-links/{link} (PUT)
+        Route::delete('/{link}', [TvChannelLinkController::class, 'destroy'])->name('destroy');     // /dashboard/tv-links/{link} (DELETE)
     });
 
     // Grupo de rotas de séries
