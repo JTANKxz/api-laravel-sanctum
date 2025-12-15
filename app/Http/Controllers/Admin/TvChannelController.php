@@ -12,9 +12,11 @@ class TvChannelController extends Controller
     // Listar todos os canais
     public function index()
     {
-        $channels = TVChannel::with('links')->get();
+        $channels = TVChannel::all();
         return view('admin.tv.index', compact('channels'));
     }
+
+    
 
     // Mostrar formulário de criação
     public function create()
