@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/user', [UserApiController::class, 'update']);
     Route::post('/banana', [CheckoutController::class, 'create']);
     Route::post('/support', [SupportApiController::class, 'store']);
+    Route::get('/support/search', [SupportApiController::class, 'search']);
 });
 Route::get('/plans', [PlansController::class, 'index']);//OK✅
 

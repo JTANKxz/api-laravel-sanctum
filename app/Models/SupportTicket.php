@@ -13,8 +13,11 @@ class SupportTicket extends Model
         'user_id',
         'category',
         'problem',
-        'item_id',
+
+        // 🔥 ITEM SELECIONADO NO APP
+        'item_name',
         'item_type',
+
         'message',
         'app_version',
         'status',
@@ -23,18 +26,5 @@ class SupportTicket extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Retorna o item relacionado (movie, series ou tv)
-     */
-    public function item()
-    {
-        return match ($this->item_type) {
-            'movie' => \App\Models\Movie::find($this->item_id),
-            'series' => \App\Models\Serie::find($this->item_id),
-            'tv' => \App\Models\TvChannel::find($this->item_id),
-            default => null,
-        };
     }
 }
