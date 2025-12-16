@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\AutoEmbedUrls;
+use App\Models\AutoEmbedUrl;
 use App\Models\Movie;
 use App\Models\MoviePlayLink;
 use Illuminate\Http\Request;
@@ -45,7 +45,7 @@ class MovieController extends Controller
             ->get();
 
         // AutoEmbed: links gerados dinamicamente
-        $autoEmbeds = AutoEmbedUrls::where('active', true)
+        $autoEmbeds = AutoEmbedUrl::where('active', true)
             ->whereIn('content_type', ['movie', 'both']) // <--- também busca os "both"
             ->orderBy('order')
             ->get()

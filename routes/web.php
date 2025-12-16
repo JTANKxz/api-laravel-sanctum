@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AppConfigController;
 use Illuminate\Support\Facades\Route;
 //uses public
 use App\Http\Controllers\Public\HomeController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Admin\MoviePlayLinkController;
 use App\Http\Controllers\Admin\HomeSectionController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
+use App\Http\Controllers\Admin\AutoEmbedUrlController;
 use App\Http\Controllers\Admin\ExploreController;
 use App\Http\Controllers\Admin\MovieController as AdminMovieController;
 use App\Http\Controllers\Admin\NetworkController as AdminNetworkController;
@@ -23,6 +25,7 @@ use App\Http\Controllers\Admin\SerieController as AdminSerieController;
 use App\Http\Controllers\Admin\TmdbController as AdminTmdbController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
+use App\Http\Controllers\Admin\PaymentsController;
 use App\Http\Controllers\Admin\PremiumCodeControllerr;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\TvChannelController;
@@ -198,5 +201,24 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::get('/{coupan}/edit', [PremiumCodeControllerr::class, 'edit'])->name('edit');
         Route::put('/{coupan}', [PremiumCodeControllerr::class, 'update'])->name('update');
         Route::delete('/{coupan}', [PremiumCodeControllerr::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('payments')->name('payments.')->group(function () {
+        Route::get('/', [PaymentsController::class, 'index'])->name('index');
+        Route::delete('/{payment}', [PaymentsController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('config')->name('config.')->group(function () {
+        Route::get('/', [AppConfigController::class, 'index'])->name('index');
+        Route::put('/', [AppConfigController::class, 'update'])->name('update');
+    });
+
+    Route::prefix('embed')->name('embeds.')->group(function () {
+        Route::get('/', [AutoEmbedUrlController::class, 'index'])->name('index');
+        Route::get('/create', [AutoEmbedUrlController::class, 'create'])->name('create');
+        Route::post('/create', [AutoEmbedUrlController::class, 'store'])->name('store');
+        Route::get('/{autoEmbed}/edit', [AutoEmbedUrlController::class, 'edit'])->name('edit');
+        Route::put('/{autoEmbed}', [AutoEmbedUrlController::class, 'update'])->name('update');
+        Route::delete('/{autoEmbed}', [AutoEmbedUrlController::class, 'destroy'])->name('destroy');
     });
 });

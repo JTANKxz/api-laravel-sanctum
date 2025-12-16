@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\AutoEmbedUrls;
+use App\Models\AutoEmbedUrl;
 use App\Models\Serie;
 use Illuminate\Http\Request;
 use App\Models\EpisodePlayLink;
@@ -41,7 +41,7 @@ class SerieController extends Controller
             ->get();
 
         // AutoEmbeds para série
-        $autoEmbeds = AutoEmbedUrls::where('active', true)
+        $autoEmbeds = AutoEmbedUrl::where('active', true)
             ->whereIn('content_type', ['serie', 'both'])
             ->orderBy('order')
             ->get();

@@ -206,6 +206,10 @@
                             </li>
                         </ul>
                     </div>
+                    <a href="{{ route('admin.tv.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
+                        <i class="fa-solid fa-tv"></i>
+                        <span class="sidebar-label ml-4">TV Channels</span>
+                    </a>
                     <a href="{{ route('admin.notifications.create') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
                         <i class="fas fa-bell text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">Notificações</span>
@@ -213,6 +217,10 @@
                     <a href="{{ route('admin.users.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
                         <i class="fas fa-users text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">Usuários</span>
+                    </a>
+                    <a href="{{ route('admin.payments.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
+                        <i class="fa-regular fa-money-bill-1"></i>
+                        <span class="sidebar-label ml-4">Payments Status</span>
                     </a>
                     <a href="{{ route('admin.subscriptions.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
                         <i class="fas fa-credit-card text-netflix-red w-6"></i>
