@@ -586,7 +586,7 @@
                 <h1>Filmes e Séries <span>Grátis</span> em um só lugar</h1>
                 <p>Assista a milhares de filmes, séries e documentários gratuitamente. Conteúdo atualizado semanalmente,
                     sem anúncios intrusivos e com qualidade de streaming Full HD.</p>
-                <a href="https://maxcine.online/app.apk" class="cta-button">
+                <a href="https://maxcine.online/fynecine.apk" class="cta-button">
                     <i class="fab fa-android"></i> Baixar para Android (APK)
                 </a>
             </div>
@@ -660,7 +660,7 @@
                         aplicativos de fontes desconhecidas nas configurações do seu dispositivo antes de instalar o
                         APK.</p>
 
-                    <a href="https://maxcine.online/app.apk" class="cta-button" style="margin-top: 30px;">
+                    <a href="https://maxcine.online/fynecine.apk" class="cta-button" style="margin-top: 30px;">
                         <i class="fas fa-download"></i> Baixar APK
                     </a>
                 </div>
@@ -796,7 +796,7 @@
                 <div class="footer-column">
                     <h3>Baixar Agora</h3>
                     <p>Disponível apenas para Android</p>
-                    <a href="https://maxcine.online/app.apk" class="cta-button"
+                    <a href="https://maxcine.online/fynecine.apk" class="cta-button"
                         style="margin-top: 15px; display: inline-block; padding: 12px 24px; font-size: 16px;">
                         <i class="fab fa-android"></i> Download APK
                     </a>

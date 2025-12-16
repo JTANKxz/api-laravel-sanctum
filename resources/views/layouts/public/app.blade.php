@@ -488,7 +488,7 @@
             <a href="{{ route('home') }}">Início</a>
             <a href="{{ route('movie.index') }}">Filmes</a>
             <a href="{{ route('serie.index') }}">Séries</a>
-            <a href="https://maxcine.online/app.apk">Baixe Nosso App</a>
+            <a href="{{ route('app.download') }}">Baixe Nosso App</a>
         </nav>
     </div>
 
@@ -563,7 +563,7 @@
 
                     <div class="footer-apps">
 
-                        <a href="https://maxcine.online/app.apk" class="app-download">
+                        <a href="{{ route('app.download') }}" class="app-download">
                             <i class="fas fa-download"></i>
                             <div class="app-info">
                                 <span>Download</span>
