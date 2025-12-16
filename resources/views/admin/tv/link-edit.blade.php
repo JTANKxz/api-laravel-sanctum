@@ -36,16 +36,6 @@
                     class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-netflix-red">
             </div>
 
-            {{-- Quality --}}
-            <div>
-                <label class="block text-gray-400 mb-2">Quality</label>
-                <input type="text"
-                    name="quality"
-                    value="{{ old('quality', $link->quality) }}"
-                    placeholder="HD"
-                    class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-netflix-red">
-            </div>
-
             {{-- Order --}}
             <div>
                 <label class="block text-gray-400 mb-2">Order</label>

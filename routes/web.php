@@ -102,7 +102,7 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::get('/{channel}', [TvChannelController::class, 'edit'])->name('edit');      // /dashboard/tv/{channel}
         Route::put('/{channel}', [TvChannelController::class, 'update'])->name('update');  // /dashboard/tv/{channel} (PUT)
         Route::delete('/{channel}', [TvChannelController::class, 'destroy'])->name('delete'); // /dashboard/tv/{channel} (DELETE)
-        Route::get('/{channel}/links', [TvChannelController::class, 'edit'])->name('links'); // Gerenciar links do canal
+        Route::get('/{channel}/links', [TvChannelController::class, 'linkManager'])->name('links'); // Gerenciar links do canal
     });
 
     // Grupo de rotas de links de TV

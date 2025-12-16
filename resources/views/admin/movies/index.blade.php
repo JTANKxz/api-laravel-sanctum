@@ -75,7 +75,7 @@
             </table>
         </div>
 
-        {{-- Links de paginação --}}
+        {{-- Links de paginaçãokk --}}
         <div class="mt-4">
             {{ $movies->links() }}
         </div>

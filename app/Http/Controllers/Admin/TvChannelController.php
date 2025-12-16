@@ -16,7 +16,11 @@ class TvChannelController extends Controller
         return view('admin.tv.index', compact('channels'));
     }
 
-    
+    public function linkManager(TVChannel $channel)
+    {
+        $links = $channel->links;
+        return view('admin.tv.links', ['channel' => $channel, 'links' => $links]);
+    }
 
     // Mostrar formulário de criação
     public function create()

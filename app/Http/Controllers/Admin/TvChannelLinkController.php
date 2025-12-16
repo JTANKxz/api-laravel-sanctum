@@ -30,7 +30,7 @@ class TvChannelLinkController extends Controller
 
         TVChannelLink::create($validated);
 
-        return redirect()->route('admin.tv.edit', $channel)
+        return redirect()->route('admin.tv.links', $channel)
             ->with('success', 'Link criado com sucesso!');
     }
 
@@ -54,7 +54,7 @@ class TvChannelLinkController extends Controller
 
         $link->update($validated);
 
-        return redirect()->route('admin.tv.edit', $link->tv_channel_id)
+        return redirect()->route('admin.tv.links', $link->tv_channel_id)
             ->with('success', 'Link atualizado com sucesso!');
     }
 
@@ -65,7 +65,7 @@ class TvChannelLinkController extends Controller
 
         try {
             $link->delete();
-            return redirect()->route('admin.tv.edit', $channelId)
+            return redirect()->route('admin.tv.links', $channelId)
                 ->with('success', 'Link deletado com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()

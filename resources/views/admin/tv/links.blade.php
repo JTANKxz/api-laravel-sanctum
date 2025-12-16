@@ -57,11 +57,6 @@
                 </tbody>
             </table>
         </div>
-
-        {{-- Links de paginação --}}
-        <div class="mt-4">
-            {{ $links->links() }}
-        </div>
     </div>
 </div>
 @endsection
