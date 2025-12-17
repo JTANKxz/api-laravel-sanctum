@@ -207,7 +207,7 @@
                         </ul>
                     </div>
                     <a href="{{ route('admin.tv.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
-                        <i class="fa-solid fa-tv"></i>
+                        <i class="fa-solid fa-tv text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">TV Channels</span>
                     </a>
                     <a href="{{ route('admin.notifications.create') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
@@ -219,7 +219,7 @@
                         <span class="sidebar-label ml-4">Usuários</span>
                     </a>
                     <a href="{{ route('admin.payments.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
-                        <i class="fa-regular fa-money-bill-1"></i>
+                        <i class="fa-regular fa-money-bill-1 text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">Payments Status</span>
                     </a>
                     <a href="{{ route('admin.subscriptions.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
@@ -230,11 +230,11 @@
                         <i class="fas fa-database text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">TMDb</span>
                     </a>
-                    <a href="#" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
-                        <i class="fas fa-chart-line text-netflix-red w-6"></i>
-                        <span class="sidebar-label ml-4">Estatísticas</span>
+                    <a href="{{ route('admin.coupans.index')}}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
+                        <i class="fa-solid fa-ticket text-netflix-red w-6"></i>
+                        <span class="sidebar-label ml-4">Codigos de resgate</span>
                     </a>
-                    <a href="#" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
+                    <a href="{{ route('admin.config.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
                         <i class="fas fa-cog text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">Configurações</span>
                     </a>

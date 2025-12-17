@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class AppConfigController extends Controller
 {
+    public function getConfig()
+    {
+        $config = AppConfig::first(); // ou pega por ID se tiver mais de uma
+        return response()->json([
+            'app_name' => $config->app_name,
+            'app_logo' => $config->app_logo,
+            'app_version' => $config->app_version,
+            'api_key' => $config->api_key
+        ]);
+    }
+
     public function getCustomMessage()
     {
         $config = AppConfig::first(); // ou pega por ID se tiver mais de uma

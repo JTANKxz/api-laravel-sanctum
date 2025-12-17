@@ -62,3 +62,7 @@ Route::post('/user/device', [UserDeviceController::class, 'store']);
 Route::get('/appMessgae', [AppConfigController::class, 'getCustomMessage']);
 Route::get('/appUpdate', [AppConfigController::class, 'getAppUptade']);
 Route::get('/appName', [AppConfigController::class, 'getAppName']);
+Route::get('/appConfig', [AppConfigController::class, 'getConfig']);
+
+
+

@@ -40,15 +40,21 @@ class NotificationController extends Controller
         $payload = [
             'message' => [
                 'topic' => 'all',
-                'notification' => [            // ✅ adiciona esta seção
+                'notification' => [
                     'title' => $request->title,
                     'body'  => $request->body,
+                    'image' => $request->image,
                 ],
                 'data' => [
                     'title'   => $request->title,
                     'message' => $request->body,
-                    'image'   => $request->image,
+                    'image'   => $request->image, 
                 ],
+                'android' => [
+                    'notification' => [
+                        'image' => $request->image
+                    ]
+                ]
             ],
         ];
         

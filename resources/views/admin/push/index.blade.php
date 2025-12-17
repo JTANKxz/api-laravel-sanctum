@@ -1,44 +1,62 @@
 @extends('layouts.admin')
 
-@section('title', 'notify')
+@section('title', 'Enviar Notificação')
 
 @section('content')
 
-<div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Enviar Notificação</h1>
+<div class="bg-medium-gray rounded-xl shadow-lg p-6 animate-fadeIn">
+    <h2 class="text-xl font-bold mb-6">Enviar Notificação</h2>
 
-    @if(session('success'))
-        <div class="bg-green-200 text-green-800 p-2 rounded mb-4">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if(session('error'))
-        <div class="bg-red-200 text-red-800 p-2 rounded mb-4">
-            {{ session('error') }}
-        </div>
-    @endif
+    <x-alert />
 
     <form action="{{ route('admin.notifications.send') }}" method="POST">
         @csrf
-        <div class="mb-4">
-            <label class="block mb-1 font-semibold">Título:</label>
-            <input type="text" name="title" class="w-full border p-2 rounded" required>
+
+        <div class="grid grid-cols-1 gap-6">
+
+            {{-- Título --}}
+            <div>
+                <label class="block text-gray-400 mb-2">Título</label>
+                <input type="text"
+                    name="title"
+                    value="{{ old('title') }}"
+                    placeholder="Ex: Atualização disponível"
+                    class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white"
+                    required>
+            </div>
+
+            {{-- Mensagem --}}
+            <div>
+                <label class="block text-gray-400 mb-2">Mensagem</label>
+                <textarea
+                    name="body"
+                    rows="4"
+                    placeholder="Digite a mensagem da notificação"
+                    class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white"
+                    >{{ old('body') }}</textarea>
+            </div>
+
+            {{-- Imagem --}}
+            <div>
+                <label class="block text-gray-400 mb-2">URL da Imagem (opcional)</label>
+                <input type="url"
+                    name="image"
+                    value="{{ old('image') }}"
+                    placeholder="https://exemplo.com/imagem.png"
+                    class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white">
+            </div>
+
         </div>
 
-        <div class="mb-4">
-            <label class="block mb-1 font-semibold">Mensagem:</label>
-            <textarea name="body" class="w-full border p-2 rounded" rows="4" required></textarea>
+        {{-- Botões --}}
+        <div class="mt-6 flex justify-end space-x-3">
+            <button type="submit"
+                class="bg-netflix-red hover:bg-red-800 text-white py-2 px-6 rounded">
+                Enviar Notificação
+            </button>
         </div>
 
-        <div class="mb-4">
-            <label class="block mb-1 font-semibold">URL da Imagem (opcional):</label>
-            <input type="url" name="image" class="w-full border p-2 rounded">
-        </div>
-
-        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-            Enviar Notificação
-        </button>
     </form>
 </div>
+
 @endsection
