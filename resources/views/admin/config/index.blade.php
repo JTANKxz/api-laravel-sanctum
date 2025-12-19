@@ -119,8 +119,8 @@
             <div>
                 <label class="block text-gray-400 mb-2">Logo (URL)</label>
                 <input type="text"
-                    name="app_logo"
-                    value="{{ old('enable_custom_splash', $config->custom_splash_image) }}"
+                    name="custom_splash_image"
+                    value="{{ old('custom_splash_image', $config->custom_splash_image) }}"
                     class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white">
             </div>
 
