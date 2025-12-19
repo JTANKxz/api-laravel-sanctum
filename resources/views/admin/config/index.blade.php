@@ -106,6 +106,24 @@
                     class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white">{{ old('custom_message', $config->custom_message) }}</textarea>
             </div>
 
+            {{-- Splash personalizado --}}
+            <div class="md:col-span-2">
+                <label class="block text-gray-400 mb-2">Enable Custom splash</label>
+                <select name="enable_custom_splash"
+                    class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white">
+                    <option value="0" {{ !$config->enable_custom_splash ? 'selected' : '' }}>Não</option>
+                    <option value="1" {{ $config->enable_custom_splash ? 'selected' : '' }}>Sim</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-gray-400 mb-2">Logo (URL)</label>
+                <input type="text"
+                    name="app_logo"
+                    value="{{ old('enable_custom_splash', $config->custom_splash_image) }}"
+                    class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white">
+            </div>
+
         </div>
 
         {{-- Botões --}}

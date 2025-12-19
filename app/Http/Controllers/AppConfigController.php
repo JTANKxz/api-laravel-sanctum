@@ -14,7 +14,9 @@ class AppConfigController extends Controller
             'app_name' => $config->app_name,
             'app_logo' => $config->app_logo,
             'app_version' => $config->app_version,
-            'api_key' => $config->api_key
+            'api_key' => $config->api_key,
+            'enable_custom_splash' => (bool) $config->enable_custom_splash,
+            'custom_splash_image' => $config->custom_splash_image,
         ]);
     }
 

@@ -30,6 +30,8 @@ class AppConfigController extends Controller
             'enable_custom_message' => 'required|boolean',
             'custom_message' => 'nullable|string',
             'tmdb_key' => 'required|string',
+            'enable_custom_splash' => 'required|boolean',
+            'custom_splash_image' => 'nullable|string'
         ]);
 
         $config->update($data);
