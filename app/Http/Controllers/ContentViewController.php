@@ -2,42 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContentView;
 use Illuminate\Http\Request;
+use App\Models\ContentView;
 use Carbon\Carbon;
 
 class ContentViewController extends Controller
 {
-    /**
-     * Registra uma visualização de conteúdo
-     * 1 view por device / conteúdo / dia
-     */
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'content_id'   => 'required|integer',
             'content_type' => 'required|in:movie,series',
-            'device_id'    => 'required|string|max:100',
+            'device_id'    => 'required|string',
+            'title'        => 'required|string',
+            'poster_url'   => 'nullable|string'
         ]);
 
         try {
             ContentView::create([
-                'content_id'   => $validated['content_id'],
-                'content_type' => $validated['content_type'],
-                'device_id'    => $validated['device_id'],
+                'content_id'   => $request->content_id,
+                'content_type' => $request->content_type,
+                'device_id'    => $request->device_id,
+                'title'        => $request->title,
+                'poster_url'   => $request->poster_url,
                 'viewed_date'  => Carbon::today(),
             ]);
         } catch (\Throwable $e) {
-            /**
-             * Aqui NÃO fazemos nada de propósito.
-             * Se cair aqui, significa que:
-             * - O usuário já contou view hoje
-             * - O índice UNIQUE bloqueou
-             */
+            // Se for duplicado (único por device_id + content + dia), apenas ignora
         }
 
         return response()->json([
-            'success' => true
+            'success' => true,
+            'message' => 'Visualização registrada com sucesso',
+            'data' => [
+                'content_id' => $request->content_id,
+                'content_type' => $request->content_type,
+                'title' => $request->title,
+                'poster_url' => $request->poster_url
+            ]
         ]);
     }
 }
