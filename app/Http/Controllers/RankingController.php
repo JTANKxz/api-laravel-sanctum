@@ -12,16 +12,20 @@ class RankingController extends Controller
 {
     public function topWeek()
     {
-        return ContentView::select(
+        $top = ContentView::select(
             'content_id',
             'content_type',
+            'title',
+            'poster_url',
             DB::raw('COUNT(*) as total_views')
         )
             ->where('created_at', '>=', now()->subDays(7))
-            ->groupBy('content_id', 'content_type')
+            ->groupBy('content_id', 'content_type', 'title', 'poster_url')
             ->orderByDesc('total_views')
             ->limit(10)
             ->get();
+
+        return response()->json($top);
     }
 
     public function topMovies()
