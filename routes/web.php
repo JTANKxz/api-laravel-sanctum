@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\NotificationController as AdminNotificationContro
 use App\Http\Controllers\Admin\PaymentsController;
 use App\Http\Controllers\Admin\PremiumCodeControllerr;
 use App\Http\Controllers\Admin\SubscriptionController;
+use App\Http\Controllers\Admin\TVChannelCategoryController;
 use App\Http\Controllers\Admin\TvChannelController;
 use App\Http\Controllers\Admin\TvChannelLinkController;
 
@@ -211,6 +212,12 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
     Route::prefix('config')->name('config.')->group(function () {
         Route::get('/', [AppConfigController::class, 'index'])->name('index');
         Route::put('/', [AppConfigController::class, 'update'])->name('update');
+    });
+
+    Route::prefix('tv-categories')->name('tv-categories.')->group(function () {
+        Route::get('/', [TVChannelCategoryController::class, 'index'])->name('index');
+        Route::get('/create', [TVChannelCategoryController::class, 'create'])->name('create');
+        Route::post('/', [TVChannelCategoryController::class, 'store'])->name('store');
     });
 
     Route::prefix('embed')->name('embeds.')->group(function () {

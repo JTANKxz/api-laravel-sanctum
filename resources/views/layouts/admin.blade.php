@@ -210,6 +210,10 @@
                         <i class="fa-solid fa-tv text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">TV Channels</span>
                     </a>
+                    <a href="{{ route('admin.tv-categories.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
+                        <i class="fas fa-layer-group text-netflix-red w-6"></i>
+                        <span class="sidebar-label ml-4">TV Categories</span>
+                    </a>
                     <a href="{{ route('admin.notifications.create') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
                         <i class="fas fa-bell text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">Notificações</span>
@@ -229,6 +233,10 @@
                     <a href="{{ route('admin.tmdb.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
                         <i class="fas fa-database text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">TMDb</span>
+                    </a>
+                    <a href="{{ route('admin.embeds.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
+                        <i class="fas fa-link text-netflix-red w-6"></i>
+                        <span class="sidebar-label ml-4">AUTO EMBED</span>
                     </a>
                     <a href="{{ route('admin.coupans.index')}}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
                         <i class="fa-solid fa-ticket text-netflix-red w-6"></i>

@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\TVChannel;
+use App\Models\TVChannelCategory;
 
-class ChannelsController extends Controller {
-    public function index() 
+class ChannelsController extends Controller
+{
+    public function index()
     {
-        $channels = TVChannel::with('links')->orderBy('name')->get();
-        return response()->json($channels);
+        $categories = TVChannelCategory::with([
+            'channels' => function ($query) {
+                $query->with('links')->orderBy('name');
+            }
+        ])
+        ->orderBy('name')
+        ->get();
+
+        return response()->json($categories);
     }
-
-    // public function show($id) 
-    // {
-    //     $channel = TVChannel::findOrFail($id);
-    //     return response()->json($channel);
-    // }
-
 }
