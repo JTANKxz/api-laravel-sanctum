@@ -70,6 +70,14 @@
                 </select>
             </div>
 
+            <div>
+                <label class="block text-gray-400 mb-2">Min Version Code</label>
+                <input type="text"
+                    name="min_version"
+                    value="{{ old('min_version', $config->min_version) }}"
+                    class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white">
+            </div>
+
             {{-- URL de atualização --}}
             <div>
                 <label class="block text-gray-400 mb-2">URL de Atualização</label>

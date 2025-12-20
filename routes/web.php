@@ -218,6 +218,9 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::get('/', [TVChannelCategoryController::class, 'index'])->name('index');
         Route::get('/create', [TVChannelCategoryController::class, 'create'])->name('create');
         Route::post('/', [TVChannelCategoryController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [TVChannelCategoryController::class, 'edit'])->name('edit');
+        Route::put('/{id}', [TVChannelCategoryController::class, 'update'])->name('update');
+        Route::delete('/{id}', [TVChannelCategoryController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('embed')->name('embeds.')->group(function () {

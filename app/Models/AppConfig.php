@@ -15,6 +15,7 @@ class AppConfig extends Model
         'api_key',
         'force_update',
         'update_url',
+        'min_version',
         'update_message',
         'enable_custom_message',
         'custom_message',

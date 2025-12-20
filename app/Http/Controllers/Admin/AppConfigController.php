@@ -25,6 +25,7 @@ class AppConfigController extends Controller
             'app_version' => 'required|string',
             'api_key' => 'required|string',
             'force_update' => 'required|boolean',
+            'min_version' => 'required|number',
             'update_url' => 'nullable|string',
             'update_message' => 'nullable|string',
             'enable_custom_message' => 'required|boolean',
