@@ -90,11 +90,13 @@
             {{-- Mensagem de atualização --}}
             <div>
                 <label class="block text-gray-400 mb-2">Mensagem de Atualização</label>
-                <input type="text"
+                <textarea
                     name="update_message"
-                    value="{{ old('update_message', $config->update_message) }}"
-                    class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white">
+                    rows="4"
+                    class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white resize-none"
+                >{{ old('update_message', $config->update_message) }}</textarea>
             </div>
+            
 
             {{-- Mensagem personalizada --}}
             <div>
