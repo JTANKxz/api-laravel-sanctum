@@ -22,6 +22,7 @@ class EventController extends Controller
     }
 
     // 💾 Salvar evento
+    // 💾 Salvar evento
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -32,19 +33,18 @@ class EventController extends Controller
             'away_team'     => 'nullable|string|max:100',
             'start_time'    => 'required|date',
             'end_time'      => 'nullable|date|after:start_time',
+            'status'        => 'required',
             'thumbnail_url' => 'nullable|url',
             'is_featured'   => 'boolean',
         ]);
-
-        // Status inicial padrão
-        $data['status'] = 'scheduled';
 
         Event::create($data);
 
         return redirect()
             ->route('admin.events.index')
-            ->with('success', 'Evento criado. Agora adicione as transmissões.');
+            ->with('success', 'Evento criado com sucesso.');
     }
+
 
     // ✏️ Editar evento
     public function edit(Event $event)

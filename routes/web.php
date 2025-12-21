@@ -244,7 +244,7 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::delete('/{event}', [EventController::class, 'destroy'])->name('destroy');
     
         // 🔗 LINKS DO EVENTO
-        Route::get('/{event}/links', [EventLinkController::class, 'index'])->name('links.index');
+        Route::get('/{event}/links', [EventLinkController::class, 'index'])->name('links');
         Route::get('/{event}/links/create', [EventLinkController::class, 'create'])->name('links.create');
         Route::post('/{event}/links', [EventLinkController::class, 'store'])->name('links.store');
         Route::get('/links/{link}/edit', [EventLinkController::class, 'edit'])->name('links.edit');

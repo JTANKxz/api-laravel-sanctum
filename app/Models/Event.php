@@ -19,6 +19,11 @@ class Event extends Model
         'is_featured'
     ];
 
+    protected $casts = [
+        'is_featured' => 'boolean',
+    ];
+    
+
     public function links()
     {
         return $this->hasMany(EventLink::class)->orderBy('order');

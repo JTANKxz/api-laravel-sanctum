@@ -36,7 +36,7 @@ class EventLinkController extends Controller
         EventLink::create($data);
 
         return redirect()
-            ->route('admin.events.links.index', $event)
+            ->route('admin.events.links', $event)
             ->with('success', 'Transmissão adicionada.');
     }
 
