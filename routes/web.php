@@ -18,6 +18,8 @@ use App\Http\Controllers\Admin\HomeSectionController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\AutoEmbedUrlController;
+use App\Http\Controllers\Admin\EventController;
+use App\Http\Controllers\Admin\EventLinkController;
 use App\Http\Controllers\Admin\ExploreController;
 use App\Http\Controllers\Admin\MovieController as AdminMovieController;
 use App\Http\Controllers\Admin\NetworkController as AdminNetworkController;
@@ -231,4 +233,23 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::put('/{autoEmbed}', [AutoEmbedUrlController::class, 'update'])->name('update');
         Route::delete('/{autoEmbed}', [AutoEmbedUrlController::class, 'destroy'])->name('destroy');
     });
+
+    Route::prefix('events')->name('events.')->group(function () {
+
+        Route::get('/', [EventController::class, 'index'])->name('index');
+        Route::get('/create', [EventController::class, 'create'])->name('create');
+        Route::post('/', [EventController::class, 'store'])->name('store');
+        Route::get('/{event}/edit', [EventController::class, 'edit'])->name('edit');
+        Route::put('/{event}', [EventController::class, 'update'])->name('update');
+        Route::delete('/{event}', [EventController::class, 'destroy'])->name('destroy');
+    
+        // 🔗 LINKS DO EVENTO
+        Route::get('/{event}/links', [EventLinkController::class, 'index'])->name('links.index');
+        Route::get('/{event}/links/create', [EventLinkController::class, 'create'])->name('links.create');
+        Route::post('/{event}/links', [EventLinkController::class, 'store'])->name('links.store');
+        Route::get('/links/{link}/edit', [EventLinkController::class, 'edit'])->name('links.edit');
+        Route::put('/links/{link}', [EventLinkController::class, 'update'])->name('links.update');
+        Route::delete('/links/{link}', [EventLinkController::class, 'destroy'])->name('links.destroy');
+    });
+    
 });

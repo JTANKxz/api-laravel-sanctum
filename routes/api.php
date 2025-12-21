@@ -12,6 +12,7 @@ use App\Http\Controllers\ContentViewController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\CustomSectionController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ExploreSectionController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\NetworkController;
@@ -41,6 +42,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/support/search', [SupportApiController::class, 'search']);
 });
 Route::get('/plans', [PlansController::class, 'index']); //OK✅
+Route::get('/events', [EventController::class, 'index']); //OK✅
 
 //começa aqui
 Route::get('/home', [HomeController::class, 'index']); //OK✅
