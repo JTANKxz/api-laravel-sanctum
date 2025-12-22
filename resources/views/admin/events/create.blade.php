@@ -53,7 +53,7 @@
                 <label class="block text-gray-400 mb-2">Status</label>
                 <select name="status"
                         class="w-full bg-dark-gray border border-gray-700 rounded-lg py-2 px-4 text-white">
-                    <option value="scheduled">Agendado</option>
+                    <option value="upcoming">Agendado</option>
                     <option value="live">Ao Vivo</option>
                     <option value="finished">Encerrado</option>
                 </select>
