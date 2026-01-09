@@ -44,6 +44,12 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/plans', [PlansController::class, 'index']); //OK✅
 Route::get('/events', [EventController::class, 'index']); //OK✅
 
+
+//ROUTES BY SLUGS
+Route::get('/movie/slug/{slug}', [MovieController::class, 'showBySlug']); //OK✅
+Route::get('/serie/slug/{slug}', [SerieController::class, 'showBySlug']); //OK✅
+Route::get('/genre/slug/{slug}', [GenreController::class, 'showBySlug']); //OK✅
+
 //começa aqui
 Route::get('/home', [HomeController::class, 'index']); //OK✅
 Route::get('/movies', [MovieController::class, 'index']); //OK✅

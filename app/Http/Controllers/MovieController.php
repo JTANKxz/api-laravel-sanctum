@@ -86,4 +86,69 @@ class MovieController extends Controller
             'content_type' => $contentType
         ]);
     }
+
+    public function showBySlug($slug)
+    {
+        $movie = Movie::with('genres')
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        $links = MoviePlayLink::where('movie_id', $movie->id)->get();
+        $contentType = $movie->content_type;
+
+        // Gêneros
+        $genres = $movie->genres;
+
+        // Relacionados
+        $relatedMovies = Movie::whereHas('genres', function ($query) use ($genres) {
+            $query->whereIn('genres.id', $genres->pluck('id'));
+        })
+            ->where('id', '!=', $movie->id)
+            ->with('genres')
+            ->latest()
+            ->limit(10)
+            ->get();
+
+        // AutoEmbed
+        $autoEmbeds = AutoEmbedUrl::where('active', true)
+            ->whereIn('content_type', ['movie', 'both'])
+            ->orderBy('order')
+            ->get()
+            ->map(function ($embed) use ($movie) {
+                $idType = null;
+                $url = $embed->url;
+
+                if (str_contains($url, '{imdb_id}')) {
+                    $url = str_replace('{imdb_id}', $movie->imdb_id, $url);
+                    $idType = 'imdb';
+                } elseif (str_contains($url, '{tmdb_id}')) {
+                    $url = str_replace('{tmdb_id}', $movie->tmdb_id, $url);
+                    $idType = 'tmdb';
+                }
+
+                return [
+                    'id' => null,
+                    'movie_id' => $movie->id,
+                    'name' => $embed->name,
+                    'quality' => $embed->quality,
+                    'order' => $embed->order,
+                    'url' => $url,
+                    'type' => $embed->type,
+                    'player_sub' => $embed->player_sub,
+                    'auto' => true,
+                    'id_type' => $idType,
+                ];
+            });
+
+        // Junta os links
+        $allLinks = $links->toArray();
+        $allLinks = array_merge($allLinks, $autoEmbeds->toArray());
+
+        return response()->json([
+            'movie' => $movie,
+            'links' => $allLinks,
+            'related' => $relatedMovies,
+            'content_type' => $contentType
+        ]);
+    }
 }

@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\NotificationController as AdminNotificationContro
 use App\Http\Controllers\Admin\PaymentsController;
 use App\Http\Controllers\Admin\PremiumCodeControllerr;
 use App\Http\Controllers\Admin\SubscriptionController;
+use App\Http\Controllers\Admin\SupportTicketController;
 use App\Http\Controllers\Admin\TVChannelCategoryController;
 use App\Http\Controllers\Admin\TvChannelController;
 use App\Http\Controllers\Admin\TvChannelLinkController;
@@ -60,6 +61,15 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
     Route::delete('/{slider}', [DashboardController::class, 'deleteSlider'])->name('deleteSlider');
     Route::get('/genres/list', [DashboardController::class, 'listGenres'])->name('genres.list');
     Route::get('/networks/list', [DashboardController::class, 'listNetworks'])->name('networks.list');
+    Route::get('/movies/search', [DashboardController::class, 'searchMovies'])->name('movies.search');
+    Route::get('/series/search', [DashboardController::class, 'searchSeries'])->name('series.search');
+    
+    Route::prefix('support')->name('support.')->group(function () {
+        Route::get('/', [SupportTicketController::class, 'index'])->name('index');
+    
+        Route::patch('/{id}/status', [SupportTicketController::class, 'updateStatus'])
+            ->name('status');
+    });
 
     Route::prefix('tmdb')->name('tmdb.')->group(function () {
         Route::get('/', [AdminTmdbController::class, 'index'])->name('index');  // /dashboard/tmdb
@@ -242,8 +252,8 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::get('/{event}/edit', [EventController::class, 'edit'])->name('edit');
         Route::put('/{event}', [EventController::class, 'update'])->name('update');
         Route::delete('/{event}', [EventController::class, 'destroy'])->name('destroy');
-    
-        // 🔗 LINKS DO EVENTO
+
+        // LINKS DO EVENTO
         Route::get('/{event}/links', [EventLinkController::class, 'index'])->name('links');
         Route::get('/{event}/links/create', [EventLinkController::class, 'create'])->name('links.create');
         Route::post('/{event}/links', [EventLinkController::class, 'store'])->name('links.store');
@@ -251,5 +261,4 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::put('/links/{link}', [EventLinkController::class, 'update'])->name('links.update');
         Route::delete('/links/{link}', [EventLinkController::class, 'destroy'])->name('links.destroy');
     });
-    
 });

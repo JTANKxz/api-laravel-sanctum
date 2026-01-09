@@ -21,7 +21,7 @@ class EventController extends Controller
         return view('admin.events.create');
     }
 
-    // 💾 Salvar evento
+        // 💾 Salvar evento
     // 💾 Salvar evento
     public function store(Request $request)
     {
@@ -46,13 +46,13 @@ class EventController extends Controller
     }
 
 
-    // ✏️ Editar evento
+    // Editar evento
     public function edit(Event $event)
     {
         return view('admin.events.edit', compact('event'));
     }
 
-    // 🔄 Atualizar evento
+    // Atualizar evento
     public function update(Request $request, Event $event)
     {
         $data = $request->validate([
@@ -64,7 +64,7 @@ class EventController extends Controller
             'start_time'    => 'required|date',
             'end_time'      => 'nullable|date|after:start_time',
             'thumbnail_url' => 'nullable|url',
-            'status'        => 'required|in:scheduled,live,finished',
+            'status'        => 'required|in:upcoming,live,finished',
             'is_featured'   => 'boolean',
         ]);
 
@@ -75,7 +75,7 @@ class EventController extends Controller
             ->with('success', 'Evento atualizado com sucesso!');
     }
 
-    // 🗑️ Remover evento
+    // Remover evento
     public function destroy(Event $event)
     {
         $event->delete(); // links serão apagados pelo ON DELETE CASCADE

@@ -40,6 +40,37 @@ class TmdbController extends Controller
         return response()->json($response->json());
     }
 
+    private function generateUniqueSlug(string $modelClass, string $title, ?string $year, ?int $ignoreId = null)
+    {
+        $baseSlug = Str::slug($title);
+        $slug = $baseSlug;
+
+        $query = $modelClass::where('slug', $slug);
+
+        if ($ignoreId) {
+            $query->where('id', '!=', $ignoreId);
+        }
+
+        // Se slug base já existir, tenta com ano
+        if ($query->exists() && $year) {
+            $slug = "{$baseSlug}-{$year}";
+        }
+
+        // Se ainda existir, adiciona sufixo incremental
+        $i = 2;
+        while (
+            $modelClass::where('slug', $slug)
+            ->when($ignoreId, fn($q) => $q->where('id', '!=', $ignoreId))
+            ->exists()
+        ) {
+            $slug = "{$baseSlug}-{$year}-{$i}";
+            $i++;
+        }
+
+        return $slug;
+    }
+
+
     public function import(Request $request)
     {
         $request->validate(['tmdb_id' => 'required|integer']);
@@ -224,12 +255,20 @@ class TmdbController extends Controller
         $poster = $this->findBestImage($imagesData['posters'] ?? [], $data['poster_path']);
         $backdrop = $data['backdrop_path'] ?? null;
 
+        $year = substr($data['release_date'] ?? '', 0, 4);
+
+        $slug = $this->generateUniqueSlug(
+            Movie::class,
+            $data['title'],
+            $year
+        );
+
         return Movie::updateOrCreate(
             ['tmdb_id' => $data['id']],
             [
                 'title' => $data['title'],
-                'slug' => Str::slug($data['title']),
-                'year' => substr($data['release_date'] ?? '', 0, 4),
+                'slug' => $slug,
+                'year' => $year,
                 'overview' => $data['overview'],
                 'poster_url' => $poster ? 'https://image.tmdb.org/t/p/w500' . $poster : null,
                 'backdrop_url' => $backdrop ? 'https://image.tmdb.org/t/p/w1280' . $backdrop : null,
@@ -245,12 +284,20 @@ class TmdbController extends Controller
         $poster = $this->findBestImage($imagesData['posters'] ?? [], $data['poster_path']);
         $backdrop = $data['backdrop_path'] ?? null;
 
+        $year = substr($data['first_air_date'] ?? '', 0, 4);
+
+        $slug = $this->generateUniqueSlug(
+            Serie::class,
+            $data['name'],
+            $year
+        );
+
         return Serie::updateOrCreate(
             ['tmdb_id' => $data['id']],
             [
                 'title' => $data['name'],
-                'slug' => Str::slug($data['name']),
-                'year' => substr($data['first_air_date'] ?? '', 0, 4),
+                'slug' => $slug,
+                'year' => $year,
                 'overview' => $data['overview'],
                 'poster_url' => $poster ? 'https://image.tmdb.org/t/p/w500' . $poster : null,
                 'backdrop_url' => $backdrop ? 'https://image.tmdb.org/t/p/w1280' . $backdrop : null,
