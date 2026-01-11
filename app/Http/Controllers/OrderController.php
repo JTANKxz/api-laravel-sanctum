@@ -100,14 +100,18 @@ class OrderController extends Controller
             ->whereIn('status', ['pending', 'approved'])
             ->count();
 
-        if ($activeOrdersCount >= $maxOrders) {
-            return response()->json([
-                'message' => $user->isPremium()
-                    ? 'Você atingiu o limite de pedidos do seu plano.'
-                    : 'Usuários gratuitos podem fazer até 2 pedidos. Assine para liberar mais.',
-                'limit' => $maxOrders
-            ], 403);
-        }
+            if ($activeOrdersCount >= $maxOrders) {
+                return response()->json([
+                    'code' => $user->isPremium()
+                        ? 'ORDER_LIMIT_PREMIUM'
+                        : 'ORDER_LIMIT_FREE',
+                    'message' => $user->isPremium()
+                        ? 'Você atingiu o limite de pedidos do seu plano.'
+                        : 'Usuários gratuitos podem fazer até 2 pedidos. Assine para liberar mais.',
+                    'limit' => $maxOrders
+                ], 403);
+            }
+
 
         /*
      * ============================
@@ -123,6 +127,7 @@ class OrderController extends Controller
 
         if ($alreadyExists) {
             return response()->json([
+                'code' => 'ORDER_ALREADY_EXISTS',
                 'message' => 'Você já fez um pedido para este título.'
             ], 409);
         }
