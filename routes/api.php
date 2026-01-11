@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\SupportApiController;
 use App\Http\Controllers\AppConfigController;
 use Illuminate\Http\Request;
@@ -40,10 +41,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/banana', [CheckoutController::class, 'create']);
     Route::post('/support', [SupportApiController::class, 'store']);
     Route::get('/support/search', [SupportApiController::class, 'search']);
+    Route::get('/orders/search', [OrderController::class, 'search']);
+    Route::post('/orders', [OrderController::class, 'store']);
 });
+
 Route::get('/plans', [PlansController::class, 'index']); //OK✅
 Route::get('/events', [EventController::class, 'index']); //OK✅
-
 
 //ROUTES BY SLUGS
 Route::get('/movie/slug/{slug}', [MovieController::class, 'showBySlug']); //OK✅
