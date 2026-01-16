@@ -88,36 +88,33 @@ class OrderController extends Controller
 
         $user = Auth::user();
 
-        /*
-     * ============================
-     * Limite de pedidos por plano
-     * ============================
-     */
+        /* ============================
+     * Limite DIÁRIO por plano
+     * ============================ */
 
         $maxOrders = $user->isPremium() ? 5 : 2;
 
+        $today = \Carbon\Carbon::today();
+
         $activeOrdersCount = Order::where('user_id', $user->id)
-            ->whereIn('status', ['pending', 'approved'])
+            ->whereDate('created_at', $today)
             ->count();
 
-            if ($activeOrdersCount >= $maxOrders) {
-                return response()->json([
-                    'code' => $user->isPremium()
-                        ? 'ORDER_LIMIT_PREMIUM'
-                        : 'ORDER_LIMIT_FREE',
-                    'message' => $user->isPremium()
-                        ? 'Você atingiu o limite de pedidos do seu plano.'
-                        : 'Usuários gratuitos podem fazer até 2 pedidos. Assine para liberar mais.',
-                    'limit' => $maxOrders
-                ], 403);
-            }
+        if ($activeOrdersCount >= $maxOrders) {
+            return response()->json([
+                'code' => $user->isPremium()
+                    ? 'ORDER_LIMIT_PREMIUM'
+                    : 'ORDER_LIMIT_FREE',
+                'message' => $user->isPremium()
+                    ? 'Você atingiu o limite de pedidos diário do seu plano.'
+                    : 'Usuários gratuitos podem fazer até 2 pedidos por dia.',
+                'limit' => $maxOrders
+            ], 403);
+        }
 
-
-        /*
-     * ============================
+        /* ============================
      * Evita pedido duplicado
-     * ============================
-     */
+     * ============================ */
 
         $alreadyExists = Order::where('user_id', $user->id)
             ->where('tmdb_id', $request->tmdb_id)
@@ -132,11 +129,9 @@ class OrderController extends Controller
             ], 409);
         }
 
-        /*
-     * ============================
+        /* ============================
      * Criação do pedido
-     * ============================
-     */
+     * ============================ */
 
         $order = Order::create([
             'user_id' => $user->id,
@@ -151,7 +146,7 @@ class OrderController extends Controller
         ]);
 
         return response()->json([
-            'message' => 'Pedido criado com sucesso!',
+            'message' => 'Pedido enviado com sucesso!',
             'order' => $order,
             'remaining' => $maxOrders - ($activeOrdersCount + 1),
         ], 201);

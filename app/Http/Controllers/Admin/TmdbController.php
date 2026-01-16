@@ -384,4 +384,52 @@ class TmdbController extends Controller
             ->values()
             ->toArray();
     }
+
+    public function importMovieByTmdbId(int $tmdbId)
+    {
+        $movieData = $this->fetchMovieData($tmdbId);
+        $imagesData = $this->fetchMovieImages($tmdbId);
+
+        $movie = $this->createOrUpdateMovie($tmdbId, $movieData, $imagesData);
+        $this->syncGenres($movie, $movieData['genres'] ?? []);
+
+        return $movie;
+    }
+
+    public function importFullSerieByTmdbId(int $tmdbId)
+    {
+        // 1. Dados da série
+        $serieData = $this->fetchSerieData($tmdbId);
+        $imagesData = $this->fetchSerieImages($tmdbId);
+
+        // 2. Cria / atualiza série
+        $serie = $this->createOrUpdateSerie($tmdbId, $serieData, $imagesData);
+        $this->syncGenres($serie, $serieData['genres'] ?? []);
+
+        // 3. Importa temporadas + episódios
+        foreach ($serieData['seasons'] as $seasonData) {
+
+            // ignora "Season 0" (especiais)
+            if ($seasonData['season_number'] <= 0) {
+                continue;
+            }
+
+            // cria temporada
+            $season = $this->createOrUpdateSeason($serie->id, $seasonData);
+
+            // busca episódios da temporada
+            $episodesData = $this->fetchSeasonData(
+                $tmdbId,
+                $seasonData['season_number']
+            );
+
+            // importa episódios
+            $this->importSeasonEpisodes(
+                $season,
+                $episodesData['episodes'] ?? []
+            );
+        }
+
+        return $serie;
+    }
 }

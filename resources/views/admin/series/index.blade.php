@@ -54,6 +54,15 @@
                             <a href="{{ route('admin.series.edit', $serie->id) }}" class="text-gray-400">
                                 <i class="fas fa-edit"></i>
                             </a>
+
+                            <form action="{{ route('admin.series.delete', $serie->id) }}" method="POST"
+                                onsubmit="return confirm('Tem certeza que deseja excluir esta série?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500 hover:text-red-400">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach

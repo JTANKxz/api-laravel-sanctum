@@ -27,6 +27,7 @@ use App\Http\Controllers\Admin\SerieController as AdminSerieController;
 use App\Http\Controllers\Admin\TmdbController as AdminTmdbController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PaymentsController;
 use App\Http\Controllers\Admin\PremiumCodeControllerr;
 use App\Http\Controllers\Admin\SubscriptionController;
@@ -63,10 +64,10 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
     Route::get('/networks/list', [DashboardController::class, 'listNetworks'])->name('networks.list');
     Route::get('/movies/search', [DashboardController::class, 'searchMovies'])->name('movies.search');
     Route::get('/series/search', [DashboardController::class, 'searchSeries'])->name('series.search');
-    
+
     Route::prefix('support')->name('support.')->group(function () {
         Route::get('/', [SupportTicketController::class, 'index'])->name('index');
-    
+
         Route::patch('/{id}/status', [SupportTicketController::class, 'updateStatus'])
             ->name('status');
     });
@@ -260,5 +261,12 @@ Route::middleware(['admin'])->prefix('dashboard')->name('admin.')->group(functio
         Route::get('/links/{link}/edit', [EventLinkController::class, 'edit'])->name('links.edit');
         Route::put('/links/{link}', [EventLinkController::class, 'update'])->name('links.update');
         Route::delete('/links/{link}', [EventLinkController::class, 'destroy'])->name('links.destroy');
+    });
+
+    Route::prefix('orders')->name('orders.')->group(function () {
+        Route::get('/', [OrderController::class, 'index'])->name('index');
+        Route::post('/{order}/import', [OrderController::class, 'import'])->name('import');
+        Route::patch('/{order}/cancel', [OrderController::class, 'cancel'])->name('cancel');
+        Route::delete('/{order}', [OrderController::class, 'destroy'])->name('destroy');
     });
 });
