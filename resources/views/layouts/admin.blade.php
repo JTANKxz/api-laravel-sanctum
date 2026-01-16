@@ -226,6 +226,10 @@
                         <i class="fas fa-headset text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">Suporte</span>
                     </a>
+                    <a href="{{ route('admin.orders.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
+                        <i class="fas fa-info text-netflix-red w-6"></i>
+                        <span class="sidebar-label ml-4">Pedidos</span>
+                    </a>
                     <a href="{{ route('admin.payments.index') }}" class="sidebar-item flex items-center p-4 text-gray-300 hover:text-white">
                         <i class="fa-regular fa-money-bill-1 text-netflix-red w-6"></i>
                         <span class="sidebar-label ml-4">Payments Status</span>

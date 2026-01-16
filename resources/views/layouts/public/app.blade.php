@@ -503,7 +503,9 @@
     <div class="main-container">
         <header class="header">
             <a href="#" id="menuIcon" class="menu-icon"><i class="fa-solid fa-bars"></i></a>
-            <h1 class="logo">MaxCIne</h1>
+            <a href="{{ route('home') }}">
+                <h1 class="logo">MaxCIne</h1>
+            </a>
             <nav class="header-nav">
                 <ul class="header-menu">
                     <li class="header-item">

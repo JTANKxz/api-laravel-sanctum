@@ -81,11 +81,11 @@
             @foreach ($genres as $genre)
                 <a href="{{ route('genres.show', ['slug' => $genre->slug]) }}" class="genre-card">{{ $genre->name }}</a>
             @endforeach
-    </div>
-</section>
+        </div>
+    </section>
 
-<!-- Seção do Elenco -->
-{{-- <section class="cast-section">
+    <!-- Seção do Elenco -->
+    {{-- <section class="cast-section">
     <div class="section-header">
         <h2 class="section-title">Elenco Principal</h2>
         <a href="#" class="see-all-btn">Ver todo elenco <i class="fa-solid fa-arrow-right"></i></a>
@@ -136,22 +136,24 @@
     </div>
 </section> --}}
 
-<!-- Seção de Filmes Similares -->
-<section class="similar-movies-section">
-    <div class="section-header">
-        <h2 class="section-title">Filmes Similares</h2>
-    </div>
-    <div class="movies-container">
-        @foreach ($relatedMovies as $movie)
-            <div class="movie-card">
-                <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}">
-                <div class="rating">{{ $movie->rating }}/10</div>
-                <div class="card-info">
-                    <div class="movie-title-card">{{ $movie->title }}</div>
-                    <div class="release-year">{{ $movie->year }}</div>
-                </div>
-            </div>
-        @endforeach
-    </div>
-</section>
+    <!-- Seção de Filmes Similares -->
+    <section class="similar-movies-section">
+        <div class="section-header">
+            <h2 class="section-title">Filmes Similares</h2>
+        </div>
+        <div class="movies-container">
+            @foreach ($relatedMovies as $movie)
+                <a href="{{ route('movie.show', ['slug' => $similar->slug]) }}">
+                    <div class="movie-card">
+                        <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}">
+                        <div class="rating">{{ $movie->rating }}/10</div>
+                        <div class="card-info">
+                            <div class="movie-title-card">{{ $movie->title }}</div>
+                            <div class="release-year">{{ $movie->year }}</div>
+                        </div>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+    </section>
 @endsection
